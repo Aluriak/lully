@@ -29,10 +29,13 @@ def last(collection:[object], condition=lambda _: True, default=None) -> object:
     return first(reversed(collection), condition, default)
 
 
-def zip_with_next(collection:iter, nb_next:int=2, default_value=None):
+def zip_with_next(collection:iter, nb_next:int=2, fillvalue=None):
     '''
     >>> tuple(zip_with_next('abc'))
     (('a', 'b'), ('c', None))
     '''
     args = [iter(collection)] * nb_next
-    yield from itertools.zip_longest(*args, fillvalue=default_value)
+    yield from itertools.zip_longest(*args, fillvalue=fillvalue)
+
+#alias to the same function with a more popular name
+window = zip_with_next
