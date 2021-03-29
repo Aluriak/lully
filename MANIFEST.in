@@ -1,0 +1,4 @@
+include LICENCE MANIFEST.in README.mkd
+exclude *.png Makefile
+recursive-include lully *.py
+prune examples
