@@ -105,3 +105,23 @@ Fief is a decorator that will make that for you, using `inspect` module.
 
     # and suddenly, you can provide anything in keywords argument:
     assert func(**config) == 5   # no TypeError, that's magic !
+
+
+## random
+### lsample
+This is a function answering to the *n choose k* problem using the Vitter's algorithm.
+
+The problem is to choose randomly n element in a set of k. That's usually done with the `random.sample(n, [1, 2, ...])` function. Hence the *sampling* part of `lsample` name.
+However, that stdlib function will load everything in memory, forcing you to provide a list, not a generator.
+
+Vitter's solution is to collect the `n` elements during a single pass over the list, making possible to work on generators,
+as long as you have a idea of their size, hence not loading all data in memory.
+
+    from lully import lsample
+    print(lsample(3, [x for x in range(10)], it_size=10))
+
+This enables you to pick 100 random tweets among the entire tweeter database without having to load it in memory.
+Provided you have enough time for the full browsing to be performed.
+
+See [that repo](https://github.com/aluriak/linear_choosens) for more information, sources and benchmarks.
+
