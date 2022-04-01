@@ -70,3 +70,38 @@ When coding in other languages, you get ideas. Here are the ones i got after a 1
 See the [source file](lully/kotlin.py) for the full set of functions.
 
 
+## Fief
+This name should recall both its goal, which is *FIltering of EFfective paramaters*, and the fact it keeps functions to work within their [fief](https://en.wikipedia.org/wiki/Fief).
+
+You have this function:
+
+    def func(a, b):
+        ...  # some implementation
+
+and you have its parameter stored in a dict, with other keys that are not for that specific function:
+
+    config = {'a': 1, 'b': 'doe', 'loglevel': 'WARNING'}
+
+Thus, you can't just do that:
+
+    func(**config)
+
+Because of the expected:
+
+    TypeError: func() got an unexpected keyword argument 'loglevel'
+
+One solution can be to filter that dict, but that's cumbersome and needs maintainance. And that's worse if you have a lot of functions to call that way.
+
+Fief is a decorator that will make that for you, using `inspect` module.
+
+
+    from lully import fief
+
+    @fief
+    def func(a, b):
+        return a + b
+
+    config = {'a': 2, 'b': 3, 'loglevel': 'WARNING'}
+
+    # and suddenly, you can provide anything in keywords argument:
+    assert func(**config) == 5   # no TypeError, that's magic !
