@@ -6,7 +6,7 @@ Some functions are joyfully collectivized from itertools documentation.
 
 import operator
 import collections
-from itertools import chain, zip_longest, islice
+from itertools import chain, zip_longest, islice, repeat
 
 
 def ncycles(iterable, n):
