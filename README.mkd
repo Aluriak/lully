@@ -1,0 +1,72 @@
+# Lully
+A small library providing some helpers for python devs.
+
+See the [tests](test/) for usage examples and ideas.
+
+
+## Collections
+
+### Otom
+The One-To-One-Mapping is a special kind of dict, where all values are also keys, associated to their key.
+
+
+    from lully import Otom
+
+    O = Otom({
+        'one': 1,
+        'two': 2,
+        'tee': 3,
+    })
+    assert O[1] == 'one'
+    assert O['one'] == 1
+
+An Otom acts like a dict. See [tests](test/test_collections.py) for more.
+
+
+## Confiseur
+A Confiseur is here to help with configurations.
+
+The principle is to subclass, for each configuration kind you need, the Confiseur base class and populate it with Bonbon instances, describing options.
+
+    from lully import Confiseur, Bonbon
+
+    class MyConfig(Confiseur):
+
+        def bonbons(self) -> [Bonbon]:
+            return (
+                Bonbon('server options', 'max instances', default=3),
+            )
+
+        def validate(self, cfg):
+            if cfg['server options']['max instances'] > 10:
+                self.add_error(f"Can't handle more than ten instances. Provided: {cfg['server options']['max instances']}.")
+
+    myconfig = MyConfig('{"server options": { "max instances": 11 }}')
+    assert myconfig['server options']['max instances'] == 11
+    assert myconfig.has_error
+    assert len(myconfig.errors)
+
+See [tests](test/test_confiseur.py) for more.
+
+
+## Itermore
+More itertools functions !
+
+    from lully.itermore import window, grouper, flatten, dotproduct, ncycles
+
+See the [source file](lully/itermore.py) for the full set of functions.
+
+
+## Kotlin-inspired functions
+When coding in other languages, you get ideas. Here are the ones i got after a 1h course of Kotlin.
+
+    from lully import first, last, zip_with_next
+
+    assert first([1, 2]) == 1
+    assert last([1, 2]) == 2
+    assert first([2, 3], lambda x: x % 2) == 3
+    assert tuple(zip_with_next('abc')) == (('a', 'b'), ('c', None))
+
+See the [source file](lully/kotlin.py) for the full set of functions.
+
+
