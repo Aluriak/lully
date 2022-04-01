@@ -1,7 +1,7 @@
 
 
 import json
-from lully.confiseur import Confiseur, Bonbon
+from lully import Confiseur, Bonbon
 
 
 class MyConfig(Confiseur):
