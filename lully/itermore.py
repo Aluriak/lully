@@ -1,15 +1,22 @@
+"""Even more itertools !
+
+Some functions are joyfully collectivized from itertools documentation.
+
+"""
 
 import operator
 import collections
-from itertools import chain
+from itertools import chain, zip_longest, islice
 
 
 def ncycles(iterable, n):
     "Returns the sequence elements n times"
     return chain.from_iterable(repeat(tuple(iterable), n))
 
+
 def dotproduct(vec1, vec2):
     return sum(map(operator.mul, vec1, vec2))
+
 
 def convolve(signal, kernel):
     # See:  https://betterexplained.com/articles/intuitive-convolution/
@@ -23,6 +30,31 @@ def convolve(signal, kernel):
         window.append(x)
         yield sum(map(operator.mul, kernel, window))
 
-def flatten(list_of_lists):
+
+def flatten(list_of_lists: list) -> iter:
     "Flatten one level of nesting"
     return chain.from_iterable(list_of_lists)
+
+
+def grouper(iterable, n, fillvalue=None) -> iter:
+    """Collect data into fixed-length chunks or blocks
+
+    >>> tuple(map(''.join, grouper('ABCDEFG', 3, 'x')))
+    ('ABC', 'DEF', 'Gxx')
+    >>> tuple(grouper('ABC', 2))
+    (('A', 'B'), ('C', None))
+
+    """
+    args = [iter(iterable)] * n
+    return zip_longest(*args, fillvalue=fillvalue)
+
+
+def window(it:iter, size:int=2) -> iter:
+    it = iter(it)
+    window = collections.deque(islice(it, 0, size), maxlen=size)
+    while True:
+        yield tuple(window)
+        try:
+            window.append(next(it))
+        except StopIteration:
+            return

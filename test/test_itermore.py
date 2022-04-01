@@ -1,7 +1,5 @@
 
-
 from lully import window
-
 
 TESTS = {
     ('ABC', 2): (('A', 'B'), ('B', 'C')),
