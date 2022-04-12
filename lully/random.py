@@ -41,7 +41,7 @@ def lsample(nb:int, it:iter, it_size=None, *, random=random.random) -> set:
     return choosens
 
 
-def weighed_choice(choices: dict = None, **choices_as_dict):
+def weighted_choice(choices: dict = None, **choices_as_dict):
     if choices is None and not choices_as_dict:
         raise ValueError(f"No valid parameter given.")
     if choices is None:
