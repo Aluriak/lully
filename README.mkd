@@ -125,3 +125,16 @@ Provided you have enough time for the full browsing to be performed.
 
 See [that repo](https://github.com/aluriak/linear_choosens) for more information, sources and benchmarks.
 
+
+### weighed_choices
+This function is basically a `random.choice()` equivalent, but where each choice can be weighted.
+
+    from lully import weighed_choices
+    print(weighed_choices(a=2, b=4, c=1))
+
+Will print you mostly `b`, sometimes `a` and only once on seven calls `c`.
+
+Note that you can also provide the input choices as a dict:
+
+    print(weighed_choices({'a': 2, 'b': 4, 'c': 1))
+
