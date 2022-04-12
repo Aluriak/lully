@@ -1,5 +1,5 @@
 
-__version__ = '0.0.4'
+__version__ = '0.0.5.dev0'
 
 # all functions are accessible from upper level,
 #  since their dissociation into files are often not relevant for user.
