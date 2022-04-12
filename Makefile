@@ -5,3 +5,7 @@ test:
 
 
 .PHONY: t test
+
+
+fullrelease:
+	echo -e "\n\n\n\n\n\n\nn\n\n\n\n" | fullrelease
