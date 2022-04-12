@@ -1,8 +1,8 @@
 
-from random import random
+import random
 
 
-def lsample(nb:int, it:iter, it_size=None, *, random=random) -> set:
+def lsample(nb:int, it:iter, it_size=None, *, random=random.random) -> set:
     """Return a subset of given iterable of given size.
 
     Implementation of Vitter's algorithm for the n choose k problem.
@@ -39,3 +39,38 @@ def lsample(nb:int, it:iter, it_size=None, *, random=random) -> set:
         if nb == 0:  # no more element to choose
             break
     return choosens
+
+
+def weighed_choice(choices: dict = None, **choices_as_dict):
+    if choices is None and not choices_as_dict:
+        raise ValueError(f"No valid parameter given.")
+    if choices is None:
+        choices = dict(choices_as_dict)
+
+    is_int = all(isinstance(v, int) for v in choices.values())
+    is_float = all(isinstance(v, float) for v in choices.values())
+
+    if is_int:
+        total = sum(choices.values())
+        choice_index = random.randint(1, total)
+        for choice, weight in choices.items():
+            choice_index -= weight
+            if choice_index <= 0:
+                return choice
+        raise RuntimeError(f"this shouldn't happen")
+
+    elif is_float:
+        total = round(sum(choices.values()))
+        if total != 1:
+            raise ValueError(f"Given weights are floats, but does not add up to 1 (instead, to {total} ({round(sum(choices.values()), 2)}))")
+        choice_index = random.random()
+        for choice, weight in choices.items():
+            choice_index -= weight
+            if choice_index <= 0:
+                return choice
+        raise RuntimeError(f"this shouldn't happen")
+
+    else:
+        raise ValueError(f"Input choices weights must be all int, or all float")
+
+
