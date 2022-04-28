@@ -41,36 +41,38 @@ def lsample(nb:int, it:iter, it_size=None, *, random=random.random) -> set:
     return choosens
 
 
-def weighted_choice(choices: dict = None, **choices_as_dict):
-    if choices is None and not choices_as_dict:
-        raise ValueError(f"No valid parameter given.")
-    if choices is None:
-        choices = dict(choices_as_dict)
+def randsum(total: int, outsize: int, maxsub: int = math.inf) -> list[int]:
+    """
 
-    is_int = all(isinstance(v, int) for v in choices.values())
-    is_float = all(isinstance(v, float) for v in choices.values())
+    >>> sum(randsum(50, 5))
+    50
+    >>> len(randsum(50, 5))
+    5
+    >>> len(randsum(5, 1, maxsub=5))[0]
+    5
 
-    if is_int:
-        total = sum(choices.values())
-        choice_index = random.randint(1, total)
-        for choice, weight in choices.items():
-            choice_index -= weight
-            if choice_index <= 0:
-                return choice
-        raise RuntimeError(f"this shouldn't happen")
-
-    elif is_float:
-        total = round(sum(choices.values()))
-        if total != 1:
-            raise ValueError(f"Given weights are floats, but does not add up to 1 (instead, to {total} ({round(sum(choices.values()), 2)}))")
-        choice_index = random.random()
-        for choice, weight in choices.items():
-            choice_index -= weight
-            if choice_index <= 0:
-                return choice
-        raise RuntimeError(f"this shouldn't happen")
-
-    else:
-        raise ValueError(f"Input choices weights must be all int, or all float")
-
+    """
+    assert outsize <= total
+    assert maxsub * outsize >= total
+    found = []
+    remaining_size = outsize
+    remaining_total = total
+    # decide the first outsize-1 random subs
+    while len(found) < outsize - 1:
+        new_value = random.randint(1, min(remaining_total - (remaining_size), maxsub))
+        found.append(new_value)
+        remaining_total -= new_value
+        remaining_size -= 1
+    # ensure the last one doesn't exceed maxsub ; if so, redistribute among non maximal ones
+    if remaining_total > maxsub:
+        for _ in range(remaining_total - maxsub):
+            incrementables = [i for i in range(len(found)) if found[i] < maxsub]
+            assert incrementables, incrementables
+            idx = random.choice(incrementables)
+            found[idx] += 1
+    # add the last sub
+    found.append(min(remaining_total, maxsub))
+    assert sum(found) == total, (found, sum(found), total)
+    assert all(f <= maxsub for f in found), (found, maxsub)
+    return found
 
