@@ -31,13 +31,13 @@ def parse_string(string: str, filetype: str) -> dict:
 def parse_file(fname: str, filetype: str) -> dict:
     if filetype == 'ini':
         cfg = configparser.ConfigParser()
-        cfg.read(input_file)
+        cfg.read(fname)
         return {
             section: {sub: val for sub, val in cfg[section].items()}
             for section in cfg.sections()
         }
     elif filetype == 'json':
-        with open(input_file) as fd:
+        with open(fname) as fd:
             return json.load(fd)
     elif filetype in AVAILABLE_FILETYPES:
         raise NotImplementedError(f"Filetype {filetype} is said to be an available filetype, but its parsing is not handled !")
@@ -252,7 +252,7 @@ class Confiseur:
     def __derive_types(self):
         for bonbon in self.__bonbons:
             value = bonbon.value_in(self.config)
-            if bonbon.has_choice and not value in bonbon.choices:
+            if bonbon.has_choice and value not in bonbon.choices:
                 self.add_error(f"Bonbon {bonbon} expected one of {len(bonbon.choices)}, got {value}, which is not valid. Must be one of: {', '.join(map(str, bonbon.choices))}")
             elif not bonbon.accepts_typed(value):
                 self.add_error(f"Bonbon {bonbon} expected type {bonbon.type}, got {value} of type {type(value)}")
@@ -260,4 +260,4 @@ class Confiseur:
 
 
     def bonbons(self) -> [Bonbon]:
-        raise NotImplementedError(f"Subclasses of Confiseur must have a collection of Bonbon instances.")
+        raise NotImplementedError("Subclasses of Confiseur must have a collection of Bonbon instances.")

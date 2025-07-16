@@ -1,4 +1,5 @@
 
+import math
 import random
 
 
@@ -48,7 +49,7 @@ def randsum(total: int, outsize: int, maxsub: int = math.inf) -> list[int]:
     50
     >>> len(randsum(50, 5))
     5
-    >>> len(randsum(5, 1, maxsub=5))[0]
+    >>> randsum(5, 1, maxsub=5)[0]
     5
 
     """

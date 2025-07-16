@@ -38,3 +38,13 @@ def test_fief_with_positionals():
 
     # with fief, the problem is gone
     assert fief(funcA)(2, **params) == 5
+
+
+def test_base_api():
+    def func(a: int, /, b, *, c=1):
+        return a + b + c
+
+    assert fief.call(func, a=1, b=2, c=4, d=8) == 7
+    assert fief.call(func, a=1, b=2, d=8) == 4
+    with pytest.raises(TypeError):  # missing params
+        fief.call(func, b=2)

@@ -1,4 +1,10 @@
+*.egg
+*.egg-info/
 *.egg-info/
 *.vim
+.eggs/
 __pycache__/
+build/
+eggs/
+sdist/
 venv/
