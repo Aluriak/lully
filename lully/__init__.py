@@ -22,6 +22,7 @@ from .fief import fief
 from .colop import *
 from .files import *
 from .binary import *
+from .kotlin import *
 from .logger import *
 from .random import *
 from .hashing import *
