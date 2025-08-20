@@ -16,7 +16,7 @@ class HandMadeLogger:
         return self.logfunc(*args, **self.supp_kwargs, **kwargs)
     debug = info = warning = warn = error = critical = log
 
-def logger_from(obj: Union[Callable, logging.Logger]) -> Union[logging.Logger, HandMadeLogger]:
+def logger_from(obj: Union[Callable, logging.Logger] = print) -> Union[logging.Logger, HandMadeLogger]:
     """Return an object able to log using .debug, .info, .warning etc."""
 
     if obj is print or obj is None or obj is HandMadeLogger:

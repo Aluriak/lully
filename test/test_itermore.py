@@ -3,7 +3,7 @@ import lully as ll
 from lully import itermore
 
 
-TESTS = {
+TESTS: dict[str, dict[tuple, tuple]] = {
     'window': {
         ('ABC', 2): (('A', 'B'), ('B', 'C')),
         ('ABCD', 2): (('A', 'B'), ('B', 'C'), ('C', 'D')),
@@ -23,7 +23,7 @@ TESTS = {
 }
 
 
-def create_test_window(func: callable, args, expected):
+def create_test_window(func, args, expected):
     def test_func():
         res = tuple(func(*args))
         assert res == expected

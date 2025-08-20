@@ -29,7 +29,7 @@ def A2Bs_B2A(a2bs: dict) -> dict:
 # class __transform:
     # def __call__(self, data: dict, tr: str) -> dict:
         # return f"do {tr} on {data}"
-        # # for src, trg in lully.it.window(tr.split('_'), 2):
+        # # for src, trg in ll.it.window(tr.split('_'), 2):
             # # if src.count('2') == 1:
                 # # key, val = src.split('2')
     # def __getattr__(self, key):
