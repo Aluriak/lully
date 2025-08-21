@@ -3,6 +3,16 @@ A small library providing some helpers for python devs.
 
 See the [tests](test/) for usage examples and ideas.
 
+## Funcmore
+More tools for functions, notably `lully.ẍ`, that create a function out of two :
+
+    import lully as ll
+    ll.ẍ(print, input)('$ ')
+    ll.ẍ(''.join, lambda v: v.split())('h e l l o')  # --> 'hello'
+
+And `lully.ÿ` that do the same thing, but splat the output in next function call :
+
+    ll.ÿ(print, '|'.join)('hello')  # --> 'h|e|l|l|o'
 
 ## Collections
 
@@ -22,6 +32,14 @@ The One-To-One-Mapping is a special kind of dict, where all values are also keys
 
 An Otom acts like a dict. See [tests](test/test_collections.py) for more.
 
+
+### Transformations
+
+## Date utils
+Many functions, like `time_since`, `time_from_now`, `pretty_seconds`, `parse_date`, `now_plus`, `add_time`, `parse_isoformat_with_microseconds` may help dealing with (un)aware datetimes, relative times, and various date format.
+
+## Human-readable hashing
+You may get a string like *Pieuvre Minérale* out of any python object with `lully.human_code`.
 
 ## Confiseur
 A Confiseur is here to help with configurations.
@@ -115,7 +133,7 @@ The problem is to choose randomly n element in a set of k. That's usually done w
 However, that stdlib function will load everything in memory, forcing you to provide a list, not a generator.
 
 Vitter's solution is to collect the `n` elements during a single pass over the list, making possible to work on generators,
-as long as you have a idea of their size, hence not loading all data in memory.
+as long as you have an idea of their size, hence not loading all data in memory.
 
     from lully import lsample
     print(lsample(3, [x for x in range(10)], it_size=10))
@@ -126,15 +144,6 @@ Provided you have enough time for the full browsing to be performed.
 See [that repo](https://github.com/aluriak/linear_choosens) for more information, sources and benchmarks.
 
 
-### weighed_choices
-This function is basically a `random.choice()` equivalent, but where each choice can be weighted.
-
-    from lully import weighed_choices
-    print(weighed_choices(a=2, b=4, c=1))
-
-Will print you mostly `b`, sometimes `a` and only once on seven calls `c`.
-
-Note that you can also provide the input choices as a dict:
-
-    print(weighed_choices({'a': 2, 'b': 4, 'c': 1))
-
+## Logging
+The generic `lully.logger_from(o)` will help you getting a logger, whatever `o` is. By default, it will be a logger using print statements written in stderr,
+but you can also provide a configured logger.

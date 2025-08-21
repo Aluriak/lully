@@ -40,7 +40,7 @@ from .dateutils import *
 from .kotlin import *
 
 # classy imports
-from .funcmore import x as ẍ
+from .funcmore import x as ẍ, y as ÿ
 
 
 if has_import_error:

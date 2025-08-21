@@ -1,11 +1,25 @@
 """Supplementary functions for functools"""
 
 import inspect
+import lully as ll
 from typing import Callable, TypeVar
+from collections import namedtuple
 
 
-def x(*funcs, reverse=False):
-    """return h=f×g×…
+def x(*funcs: Callable, reverse: bool = False, fief: bool = True) -> Callable:
+    """Return h=f×g×…
+
+    x(f,g)(v) == f×g(v) == g(f(v))
+
+    Expect each function to take the output of previous function as first output.
+    To get a splat operator between functions, see y.
+
+
+    >>> def f(a, b): return a, b
+    >>> def g(c, d): return c, d
+    >>> x(f, g)(1, 2, b=3)
+    ((1, 2), 3)
+
 
     >>> x(list, sorted)((2, 1))
     [1, 2]
@@ -17,11 +31,37 @@ def x(*funcs, reverse=False):
     """
     def __x(*args, **kwargs):
         first, *rests = funcs if reverse else reversed(funcs)
-        v = first(*args, **kwargs)
+        v = (ll.fief(first) if fief else first)(*args, **kwargs)
         for f in rests:
-            v = f(v)
+            v = (ll.fief(f) if fief else f)(v, **kwargs)
         return v
     return __x
+
+
+def y(*funcs: Callable, reverse: bool = False, fief: bool = True) -> Callable:
+    """Return h=f×g×…
+
+    Splat version of x, where y(f,g)(v) == g(*f(v))
+
+    >>> def f(a, b): return a, b
+    >>> def g(c, d): return c, d
+    >>> y(f, g)(1, 2)
+    (1, 2)
+    >>> y(f, g)(1, d=2)
+    (1, 2)
+
+    """
+    def __y(*args, **kwargs):
+        first, *rests = funcs if reverse else reversed(funcs)
+        v = (ll.fief(first) if fief else first)(*args, **kwargs)
+        for f in rests:
+            f = (ll.fief(f) if fief else f)
+            if isinstance(v, (list, tuple)) and len(v) > 1:  # splat operator looks expected
+                v = f(*v, **kwargs)
+            else:
+                v = f(v, **kwargs)
+        return v
+    return __y
 
 
 def has_param(f: Callable, p: str) -> bool:
