@@ -19,8 +19,9 @@ typing:
 
 
 upload:
-	python setup.py build sdist
-	python -m twine upload dist/*
+	- python setup.py build sdist
+	- python -m twine upload dist/*
+	echo "ALL_PROXY=$$ALL_PROXY"
 
 clean:
 	- rm -rf dist build lully.egg-info */__pycache__ .pytest_cache .ruff_cache .mypy_cache
