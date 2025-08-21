@@ -2,11 +2,12 @@
 
 import json
 from lully import Confiseur, Bonbon
+from typing import Iterable, Union
 
 
 class MyConfig(Confiseur):
 
-    def bonbons(self) -> [Bonbon]:
+    def bonbons(self):
         return (
             Bonbon('key', 'subkeyA', default='value', type=str),
             ('key', 'subkeyB', 'value'),  # a tuple is valid too, with 3 or 4 elements
