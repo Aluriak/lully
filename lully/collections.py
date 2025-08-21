@@ -1,6 +1,7 @@
 """More collections"""
 
 
+from __future__ import annotations
 from itertools import chain
 from collections import UserDict
 
@@ -36,8 +37,10 @@ class Otom(UserDict):
     def allkeys(self):
         yield from chain(self, self.values())
 
-    def __eq__(self, othr: dict):
-        return self.data == othr.data
+    def __eq__(self, othr: object) -> bool:
+        if isinstance(othr, Otom):
+            return self.data == othr.data
+        return NotImplemented
 
     def __setitem__(self, key, val):
         # remove old association val->key if it exists

@@ -1,9 +1,11 @@
 
 import math
 import random
+from itertools import islice
+from typing import Callable, Iterable, Optional, Sized
 
 
-def lsample(nb:int, it:iter, it_size=None, *, random=random.random) -> set:
+def lsample(nb: int, it: Iterable, it_size: Optional[int] = None, *, random: Callable = random.random) -> set:
     """Return a subset of given iterable of given size.
 
     Implementation of Vitter's algorithm for the n choose k problem.
@@ -24,12 +26,13 @@ def lsample(nb:int, it:iter, it_size=None, *, random=random.random) -> set:
     # parameters treatment
     choosens = set()  # set of the nb_choosen elements of it
     if it_size is None:
+        assert isinstance(it, Sized), it
         nb_elem = len(it)
     else:
         nb_elem = it_size
     assert nb <= nb_elem
     # implementation
-    for elem in it[:nb_elem]:
+    for elem in islice(it, 0, nb_elem):
         likelihood = nb / nb_elem  # modified later, depending of elem
                                              # inclusion in the choosens set
         assert 0 <= likelihood <= 1.
@@ -42,8 +45,10 @@ def lsample(nb:int, it:iter, it_size=None, *, random=random.random) -> set:
     return choosens
 
 
-def randsum(total: int, outsize: int, maxsub: int = math.inf) -> list[int]:
-    """
+def randsum(total: int, outsize: int, maxsub: Optional[int] = None) -> list[int]:
+    """Yield a list of numbers whose sum is the given total.
+
+    None for maximum list size means any number is allowed.
 
     >>> sum(randsum(50, 5))
     50
@@ -53,6 +58,8 @@ def randsum(total: int, outsize: int, maxsub: int = math.inf) -> list[int]:
     5
 
     """
+    if maxsub is None:
+        maxsub = total + 1  # maximal list size is 1+1+1+1+1+1+…
     assert outsize <= total
     assert maxsub * outsize >= total
     found = []

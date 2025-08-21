@@ -6,6 +6,7 @@ import copy
 import json
 import configparser
 from collections import ChainMap
+from typing import Iterable, Union
 
 
 AVAILABLE_FILETYPES = 'json', 'ini'
@@ -45,7 +46,7 @@ def parse_file(fname: str, filetype: str) -> dict:
 
 
 def is_input_file(fname: str) -> bool:
-    return fname and os.path.isfile(fname)
+    return bool(fname and os.path.isfile(fname))
 
 
 def filetype_of(fname: str, hint: str, isfile: bool) -> str:
@@ -121,6 +122,7 @@ class Bonbon:
         assert self.type is not None, self.type
         ok = isinstance(value, self.type)
         if ok and self.is_collection:
+            assert isinstance(value, Iterable)
             ok = all(isinstance(v, self.subtypes) for v in (value.values() if isinstance(value, dict) else value))
         return ok
 
@@ -203,7 +205,7 @@ class Confiseur:
     def raw(self) -> dict:
         return self.__raw_config
 
-    def __gen_bonbons(self) -> [Bonbon]:
+    def __gen_bonbons(self) -> Iterable[Bonbon]:
         for bonbon in self.bonbons():
             if isinstance(bonbon, (tuple, list)) and 2 < len(bonbon) < 5:
                 yield Bonbon(*bonbon)
@@ -225,6 +227,7 @@ class Confiseur:
         def gen_dicts():
             for input_file in self.input_files:
                 isfile = is_input_file(input_file)
+                assert self.filetype_hint, self.filetype_hint
                 filetype = filetype_of(input_file, hint=self.filetype_hint, isfile=isfile)
                 yield (parse_file if isfile else parse_string)(input_file, filetype)
         return dict(ChainMap(*gen_dicts()).items())
@@ -259,5 +262,5 @@ class Confiseur:
         self.derive_types(self.config)
 
 
-    def bonbons(self) -> [Bonbon]:
+    def bonbons(self) -> Iterable[Union[tuple, Bonbon]]:
         raise NotImplementedError("Subclasses of Confiseur must have a collection of Bonbon instances.")

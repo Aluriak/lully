@@ -2,9 +2,11 @@
 
 """
 
+from __future__ import annotations
 import inspect
 from functools import wraps, partial
 from itertools import zip_longest
+from typing import Any, Callable, Iterable, Optional
 
 
 class Magwitch:
@@ -12,9 +14,9 @@ class Magwitch:
 
     """
 
-    def __init__(self, func:callable, enablers:dict, disablers:dict,
-                 make_not_value:callable=lambda x: not x,
-                 values:dict={}, set_params:dict={}):
+    def __init__(self, func: Callable, enablers: dict, disablers: dict,
+                 make_not_value: Callable = lambda x: not x,
+                 values: dict = {}, set_params: dict = {}):
         """Unless you know what you do, use Magwitch.build to build instances.
 
         func -- the wrapped function
@@ -46,14 +48,14 @@ class Magwitch:
         return self.__with_switch({access[name]: make_val(self.__values.get(access[name], True))})
 
 
-    def __with_switch(self, switches:dict):
+    def __with_switch(self, switches: dict) -> Magwitch:
         return Magwitch(self.__func, self.__enablers, self.__disablers,
                         self.__make_not_value, self.__values,
                         set_params={**self.__set_params, **switches})
 
     @staticmethod
-    def build(func, enable:str='', disable:str=('no_', 'not_'), use_defaults:bool=False,
-              make_not_value:callable=None):
+    def build(func, enable: str = '', disable: Iterable[str] = ('no_', 'not_'), use_defaults: bool = False,
+              make_not_value: Optional[Callable] = None) -> Magwitch:
         """Return a brand new Magwitch for given function.
 
         func -- the wrapped function
@@ -71,11 +73,11 @@ class Magwitch:
 
         """
         if use_defaults:
-            switches = dict(_boolean_args_and_options(func))
-            kwargs = {'values': switches}
+            switches: dict = dict(_boolean_args_and_options(func))
+            kwargs: dict[str, Any] = {'values': switches}
         else:
-            switches = frozenset(_boolean_args(func))
-            kwargs = {'values': {}}
+            switches: frozenset = frozenset(_boolean_args(func))
+            kwargs: dict[str, Any] = {'values': {}}
         enables = {enable} if isinstance(enable, str) else frozenset(enable)
         disables = {disable} if isinstance(disable, str) else frozenset(disable)
         # verify the validity of prefixes
@@ -99,7 +101,7 @@ class Magwitch:
         return Magwitch(func, enablers, disablers, **kwargs)
 
 
-def _boolean_args(func:callable) -> [str]:
+def _boolean_args(func: Callable) -> Iterable[str]:
     """Yield all boolean args of given funtion.
 
     See _boolean_args_and_options for a more complex behavior
@@ -109,7 +111,7 @@ def _boolean_args(func:callable) -> [str]:
     yield from (arg for arg, type in annotations.items() if type is bool)
 
 
-def _boolean_args_and_options(func:callable, default_bool_value=True) -> [(str, object)]:
+def _boolean_args_and_options(func: Callable, default_bool_value=True) -> Iterable[tuple[str, object]]:
     """Yield pairs (boolean argument, default value) for given function.
 
     Note that arguments are not yield in the real order.
@@ -121,13 +123,13 @@ def _boolean_args_and_options(func:callable, default_bool_value=True) -> [(str, 
     switches = {arg for arg, type in annotations.items() if type is bool}
     null = type('NULL', (), {})()
     # positional args
-    for posarg, option in zip_longest(reversed(specs.args), reversed(specs.defaults), fillvalue=null):
+    for posarg, option in zip_longest(reversed(specs.args or ()), reversed(specs.defaults or ()), fillvalue=null):
         if posarg in switches:
             yield posarg, default_bool_value if option is null else option
     # kwonly args
     for kwarg in specs.kwonlyargs:
         if kwarg in switches:
-            yield kwarg, specs.kwonlydefaults.get(kwarg, default_bool_value)
+            yield kwarg, (specs.kwonlydefaults or {}).get(kwarg, default_bool_value)
 
 
 @wraps(Magwitch.build)
@@ -135,6 +137,6 @@ def on_with(*args, **kwargs):
     return lambda func: Magwitch.build(func, *args, **kwargs)
 
 
-def on(func):
+def on(func: Callable):
     """Like on_with, but with default parameters only."""
     return on_with()(func)
