@@ -19,6 +19,7 @@ typing:
 
 
 upload:
+	- rm -rf dist/
 	- python setup.py build sdist
 	- python -m twine upload dist/*
 	echo "ALL_PROXY=$$ALL_PROXY"
