@@ -17,3 +17,10 @@ typing:
 
 .PHONY: t tq test at
 
+
+upload:
+	python setup.py build sdist
+	python -m twine upload dist/*
+
+clean:
+	- rm -rf dist build lully.egg-info */__pycache__ .pytest_cache .ruff_cache .mypy_cache
