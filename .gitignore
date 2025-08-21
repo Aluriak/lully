@@ -5,6 +5,7 @@
 .eggs/
 __pycache__/
 build/
+dist/
 eggs/
 sdist/
 venv/
