@@ -2,6 +2,7 @@
 import os
 import sys
 import lully as ll
+import shutil
 import inspect
 import functools
 import itertools
@@ -45,6 +46,7 @@ def popglob(*, show: bool = False, in_repl: bool = False):
     # Other stdlib aliases
     g['os'] = os
     g['sys'] = sys
+    g['shutil'] = shutil
     g['Popen'] = subprocess.Popen
     g['partial'] = functools.partial
 
