@@ -7,12 +7,30 @@ See the [tests](test/) for usage examples and ideas.
 More tools for functions, notably `lully.ẍ`, that create a function out of two :
 
     import lully as ll
-    ll.ẍ(print, input)('$ ')
+    ll.ẍ(print, input)('$ ')  # --> print whatever user inputs
     ll.ẍ(''.join, lambda v: v.split())('h e l l o')  # --> 'hello'
+    ll.ẍ(print, list)('hello')  # --> ['h', 'e', 'l', 'l', 'o']
 
 And `lully.ÿ` that do the same thing, but splat the output in next function call :
 
-    ll.ÿ(print, '|'.join)('hello')  # --> 'h|e|l|l|o'
+    ll.ÿ(print, list)('hello')  # --> h e l l o
+
+## Popglobal
+Populate global with cabalistic aliases and some of lully's objects.
+
+    import lully as ll
+    ll.popglob()  # use show=True to get a list of added values
+
+
+    ı('a', 'b', 'c')
+    i(['a', 'b', 'c'])
+    ï()
+
+    assert first('ab') == 'a'
+    assert last('ab') == 'b'
+    assert last('ab') == 'b'
+
+Will do this automatically in REPL mode if you import lully, and if `LULLY_DISABLE_REPL` is not set to 1.
 
 ## Collections
 

@@ -29,12 +29,15 @@ from .files import *
 from .binary import *
 from .logger import *
 from .random import *
+from .popglob import popglob
 from .hashing import *
 from .funcmore import *
 from .itermore import *
+from .shellmore import *
 from .confiseur import Bonbon, Confiseur
 from .printmore import *
 from .dateutils import *
+from .collections import *
 
 # internal dependencies
 from .kotlin import *
@@ -46,3 +49,6 @@ from .funcmore import x as ẍ, y as ÿ
 if has_import_error:
     print("(to remove missing import logging, set LULLY_SILENT_IMPORT_FAILURE=1)", file=sys.stderr)
 
+if is_repl() and envvar_is_false('LULLY_DISABLE_REPL'):
+    print("Lully populated the REPL context with aliases. To prevent that behavior, set LULLY_DISABLE_REPL=1", file=sys.stderr)
+    popglob(in_repl=True)
