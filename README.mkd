@@ -3,18 +3,6 @@ A small library providing some helpers for python devs.
 
 See the [tests](test/) for usage examples and ideas.
 
-## Funcmore
-More tools for functions, notably `lully.ẍ`, that create a function out of two :
-
-    import lully as ll
-    ll.ẍ(print, input)('$ ')  # --> print whatever user inputs
-    ll.ẍ(''.join, lambda v: v.split())('h e l l o')  # --> 'hello'
-    ll.ẍ(print, list)('hello')  # --> ['h', 'e', 'l', 'l', 'o']
-
-And `lully.ÿ` that do the same thing, but splat the output in next function call :
-
-    ll.ÿ(print, list)('hello')  # --> h e l l o
-
 ## Popglobal
 Populate global with cabalistic aliases and some of lully's objects.
 
@@ -31,6 +19,19 @@ Populate global with cabalistic aliases and some of lully's objects.
     assert last('ab') == 'b'
 
 Will do this automatically in REPL mode if you import lully, and if `LULLY_DISABLE_REPL` is not set to 1.
+
+
+## Funcmore
+More tools for functions, notably `lully.ẍ`, that create a function out of two (or more):
+
+    import lully as ll
+    ll.ẍ(print, input)('$ ')  # --> print(input('$ '))
+    ll.ẍ(''.join, lambda v: v.split())('h e l l o')  # --> 'hello'
+    ll.ẍ(print, list)('hello')  # --> print(list('hello')) --> ['h', 'e', 'l', 'l', 'o']
+
+And `lully.ÿ` that do the same thing, but splat the output in next function calls :
+
+    ll.ÿ(print, list)('hello')  # --> print(*list('hello')) --> h e l l o
 
 ## Collections
 

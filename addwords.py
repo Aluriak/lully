@@ -4,7 +4,7 @@ import random
 import itertools
 import argparse
 
-from cdctools.words import NOUNS, ADJECTIVES
+from lully.words import NOUNS, ADJECTIVES
 
 
 
@@ -22,7 +22,7 @@ def set_all_words(words: set[str], kind: str):
     else:
         adjs = words
 
-def save_words(fout: str = 'cdctools/words.py'):
+def save_words(fout: str = 'lully/words.py'):
     with open(fout, 'w') as fd:
         fd.write('NOUNS = (\n')
         fd.write(''.join(f"    {repr(w)},\n" for w in sorted(list(nouns))))
