@@ -2,6 +2,7 @@ import os
 import marshal
 import requests
 import functools
+from typing_extensions import TypeAlias
 
 def get_cached(url: str, local_fname: str = 'todel.answer.data', kind: str = '', **kwargs) -> requests.Request:
     kind = kind or ('json' if url.endswith('.json') else 'text')
@@ -35,3 +36,18 @@ def printf(func = lambda *a, **k: None):
         print(' \t-->', r, '' if r is None else type(r))
         return r
     return wrapper
+
+def dryed(func, returns = None):
+    """Add debug context, but do not run the function"""
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        print(func.__name__ + ':', *args, ' '.join(f"{kwarg}={repr(val)}" for kwarg, val in kwargs.items()), end='')
+        pass  # no func call
+        print(' \t-->', returns, '[DRY RUN]')
+        return returns
+    return wrapper
+
+T: TypeAlias = object
+def id(obj: T) -> T:
+    "identity function ; do nothing to the object ; it just returns it"
+    return obj
