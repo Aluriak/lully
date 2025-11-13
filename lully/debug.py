@@ -1,6 +1,7 @@
 import os
 import marshal
 import requests
+import functools
 
 def get_cached(url: str, local_fname: str = 'todel.answer.data', kind: str = '', **kwargs) -> requests.Request:
     kind = kind or ('json' if url.endswith('.json') else 'text')
@@ -23,3 +24,14 @@ def shobj(obj, discard='_', maxwidth=100, indent='\t', print=print):
             if isinstance(v, (bytes, str)) and len(v) > maxwidth:
                 v = v[:30] + '[…]' + v[-30:]
             print(indent+indent, attr, v)
+
+
+def printf(func = lambda *a, **k: None):
+    """Add debug context to given function, if any is provided"""
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        print(func.__name__ + ':', *args, ' '.join(f"{kwarg}={repr(val)}" for kwarg, val in kwargs.items()), end='')
+        r = func(*args, **kwargs)
+        print(' \t-->', r, '' if r is None else type(r))
+        return r
+    return wrapper

@@ -4,7 +4,7 @@ import re
 import ast
 import locale
 import datetime as datetime_mod
-from datetime import datetime
+from datetime import datetime, date
 import zoneinfo
 from zoneinfo import ZoneInfo
 from typing import Union, Optional, Any, Iterable
@@ -230,3 +230,11 @@ def parse_date(s: str) -> datetime:
                             except ValueError:
                                 pass
     raise ValueError(f"Cannot parse given date `{s}`")
+
+def date_from_object(obj: Union[tuple[int, int, int], date]) -> date:
+    "try to return a date object"
+    if isinstance(birthdate, date):
+        return obj
+    if isinstance(birthdate, tuple) and len(birthdate) == 3:
+        return date(*date)
+    raise ValueError(f"Cannot extract a date object from given object {repr(obj)}")
