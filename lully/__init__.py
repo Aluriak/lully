@@ -31,9 +31,9 @@ from .logger import *
 from .random import *
 from .popglob import popglob
 from .hashing import *
-from .funcmore import *
+from .funcmore import t_iden, iden, has_param, x, y
 from .itermore import *
-from .shellmore import *
+from .shellmore import is_repl, envvar_is_true, envvar_is_false
 from .confiseur import Bonbon, Confiseur
 from .printmore import *
 from .dateutils import *

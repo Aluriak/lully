@@ -29,7 +29,7 @@ def popglob(*, show: bool = False, in_repl: bool = False):
             caller_globals = frame.frame.f_globals
             break
 
-    g = {}  # aliases that will be added to the caller globals
+    g: dict[str, object] = {}  # aliases that will be added to the caller globals
 
 
     # Itertools aliases

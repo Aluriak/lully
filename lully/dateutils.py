@@ -62,8 +62,10 @@ def zone_info_from(obj: Union[str, ZoneInfo, datetime, Any], *, raises: Optional
     return None
 
 
-def time_since(d: datetime, *, ref: Union[datetime, int, float] = None, precision: int = 2, joiner: str = ' et ') -> str:
+def time_since(d: Union[datetime, int, float], *, ref: Union[datetime, int, float] = None, precision: int = 2, joiner: str = ' et ') -> str:
     """Human repr of quantity of time separating given datetime and the given ref (or now if not provided)"""
+    if isinstance(d, (float, int)):
+        d = datetime.fromtimestamp(d)
     if isinstance(ref, (float, int)):
         _now = datetime.fromtimestamp(ref)
     elif isinstance(ref, datetime):
@@ -216,7 +218,7 @@ def is_today(dt: datetime) -> bool:
     return dt.strftime('%Y/%m/%d') == now(zone=zone_info_from(dt)).strftime('%Y/%m/%d')
 
 def parse_date(s: str) -> datetime:
-    "SLOW ; NOT THREAD SAFE"
+    "Tries to parse a date in given string ; SLOW ; NOT THREAD SAFE"
     for tmp_date in ['%A %d %B %Y', '%d %B %Y', '%B %d %Y', '%A %d %B %Y']:
         for tmp_time in ['%H:%M', '%H:%M:%S', '%Hh%M', '%Hh%Mm', '%Hh%Mm%S', '%Hh%Mm%Ss']:
             for sep in [' ', 'T', ' à ', ' at ', ' le ']:
@@ -233,8 +235,8 @@ def parse_date(s: str) -> datetime:
 
 def date_from_object(obj: Union[tuple[int, int, int], date]) -> date:
     "try to return a date object"
-    if isinstance(birthdate, date):
+    if isinstance(obj, date):
         return obj
-    if isinstance(birthdate, tuple) and len(birthdate) == 3:
-        return date(*date)
+    if isinstance(obj, tuple) and len(obj) == 3:
+        return date(*obj)
     raise ValueError(f"Cannot extract a date object from given object {repr(obj)}")

@@ -37,6 +37,7 @@ def test_time_since():
     one_day_ago = now(plus='-1d')
     assert ll.time_since(one_day_ago) == "1 jour"
     assert ll.time_since(one_day_ago, ref=one_day_ago) == "À l'instant"
+    assert ll.time_since(one_day_ago.timestamp()) == "1 jour"
 
 def test_merdier_utc():
     """Erreur trouvée depuis (sans doute) le changement d'heure, avec les tokens
@@ -67,8 +68,10 @@ def test_aware_of_utc():
     # note that utcnow returns a naive dt
     assert ll.dt_is_naive(datetime.datetime.utcnow())
 
-    assert ll.time_since(datetime.datetime.utcnow()) == '2 heures'  # heure d'été
-    # assert ll.time_since(datetime.datetime.utcnow()) == '1 heure'  # heure d'hiver
+    assert (
+        ll.time_since(datetime.datetime.utcnow()) == '2 heures'  # heure d'été
+     or ll.time_since(datetime.datetime.utcnow()) == '1 heure'  # heure d'hiver
+    )
 
 def test_is_today():
     assert ll.dateutils.is_today(datetime.datetime.now(datetime.timezone.utc))

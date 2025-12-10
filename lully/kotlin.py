@@ -5,6 +5,9 @@ import lully
 import itertools
 from typing import Iterable, TypeVar
 
+
+__all__ = 'first', 'last', 'zip_with_next'
+
 T = TypeVar('T')
 
 def first(collection: Iterable[T], condition=lambda _: True, default=None) -> T:
