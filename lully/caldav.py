@@ -8,8 +8,10 @@ from datetime import date
 def add_birthday(name, birthdate: Union[tuple[int, int, int], date], *, minage: int = 0, maxage: int = 120, url: str, usr: str, pwd: str, calid: str, title_template: str = "{name} ({N} yo)", description_template: str = "Today is the {N}th birthday of {name}"):
     """Add a birthday event (or events, see below) for given name, every year for `maxage` years after birth (120 by default).
 
-    Will create either one yearly created event (if title or description doesn't involve the use of {N} years old)
+    Will create either one yearly event (if title or description doesn't involve the use of {N} years old)
     or one event per birthday (to show how old is the birthdayed person, this is the default behavior).
+
+    Returns the event(s) created in the process.
 
     UNTESTED: caldav API is probably misused
 
