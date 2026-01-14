@@ -32,6 +32,11 @@ def test_minus():
     assert comparable(now(plus='1000s', minus='1000s')) == comparable(now())
     assert ll.dateutils.time_from_now(now(plus='50s', minus='109s')) == '59 secondes'
 
+def test_seconds_since():
+    one_hour_ago = now(minus='1h')
+    assert ll.seconds_since(one_hour_ago) == 3600
+    assert ll.seconds_since(one_hour_ago, ref=one_hour_ago) == 0
+    assert ll.seconds_since(now(plus='1h')) == -3600
 
 def test_time_since():
     one_day_ago = now(plus='-1d')

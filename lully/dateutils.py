@@ -62,8 +62,8 @@ def zone_info_from(obj: Union[str, ZoneInfo, datetime, Any], *, raises: Optional
     return None
 
 
-def time_since(d: Union[datetime, int, float], *, ref: Union[datetime, int, float] = None, precision: int = 2, joiner: str = ' et ') -> str:
-    """Human repr of quantity of time separating given datetime and the given ref (or now if not provided)"""
+def seconds_since(d: Union[datetime, int, float], *, ref: Union[datetime, int, float] = None) -> int:
+    """Number of seconds separating given datetime and the given ref (or now if not provided)"""
     if isinstance(d, (float, int)):
         d = datetime.fromtimestamp(d)
     if isinstance(ref, (float, int)):
@@ -72,7 +72,11 @@ def time_since(d: Union[datetime, int, float], *, ref: Union[datetime, int, floa
         _now = ref
     else:
         _now = now(zone=zone_info_from(d)) if dt_is_aware(d) else datetime.now()
-    total = abs(round((_now - d).total_seconds()))
+    return round((_now - d).total_seconds())
+
+def time_since(d: Union[datetime, int, float], *, ref: Union[datetime, int, float] = None, precision: int = 2, joiner: str = ' et ') -> str:
+    """Human repr of quantity of time separating given datetime and the given ref (or now if not provided)"""
+    total = abs(seconds_since(d, ref=ref))
     return pretty_seconds(total, precision=precision, joiner=joiner)
 
 def time_from_now(d: datetime, **kwargs) -> str:
