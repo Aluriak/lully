@@ -53,6 +53,15 @@ def test_merdier_utc():
     assert isinstance(zi, ZoneInfo)
     assert ll.time_since(dt) and isinstance(ll.time_since(dt), str)
 
+def test_change_tz():
+    dt = datetime.datetime.fromisoformat('2026-01-01 12:00:00.000000+01:00')
+    dt_paque = ll.dateutils.change_tz(dt, to='Chile/EasterIsland')
+    assert dt == datetime.datetime.fromisoformat('2026-01-01 12:00:00.000000+01:00')  # dt has not been changed
+    assert dt == dt_paque  # same date, different location
+    assert ll.dateutils.time_since(dt) == ll.dateutils.time_since(dt_paque)
+    assert dt.strftime('%I:%M%p') != dt_paque.strftime('%I:%M%p')
+
+
 def test_aware_of_awareness():
     assert ll.time_since(now(zone='America/Martinique', minus='15d')) == '2 semaines et 1 jour'
     assert ll.time_since(now(zone='America/Martinique',  plus='-15d'), precision=1) == '2 semaines'

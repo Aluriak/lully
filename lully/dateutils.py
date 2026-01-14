@@ -114,6 +114,11 @@ def pretty_seconds(s: int, *, precision: int = 0, repr_template: str = '{nb} {un
         for ago_count, ago_type in most_significant_segments(s, prec=precision or len(LEAPS))
     )
 
+def change_tz(d: datetime, to: Union[str, ZoneInfo, datetime]) -> datetime:
+    """Return a new datetime, changed to TZ found in `to` object"""
+    tz = zone_info_from(to)
+    return d.astimezone(tz)
+
 def dt_is_naive(d: datetime) -> bool:
     return not dt_is_aware(d)
 def dt_is_aware(d: datetime) -> bool:
