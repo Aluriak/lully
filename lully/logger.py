@@ -6,12 +6,21 @@ import lully as ll
 from typing import Union, Callable
 
 
+def log(*args, **kwargs):
+    "Log function for the poor: just call it and you get to write in stderr asap"
+    kwargs.setdefault('file') = sys.stderr
+    kwargs.setdefault('flush') = True
+    return print(*args, **kwargs)
+
+
 class HandMadeLogger:
     def __init__(self, logfunc = print):
         self.logfunc = logfunc
         self.supp_kwargs = {}
         if ll.funcmore.has_param(logfunc, 'file'):
             self.supp_kwargs['file'] = sys.stderr
+        if ll.funcmore.has_param(logfunc, 'flush'):
+            self.supp_kwargs['flush'] = True
     def log(self, *args, **kwargs):
         return self.logfunc(*args, **self.supp_kwargs, **kwargs)
     debug = info = warning = warn = error = critical = log
