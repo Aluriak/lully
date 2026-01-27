@@ -8,8 +8,8 @@ from typing import Union, Callable
 
 def log(*args, **kwargs):
     "Log function for the poor: just call it and you get to write in stderr asap"
-    kwargs.setdefault('file') = sys.stderr
-    kwargs.setdefault('flush') = True
+    kwargs.setdefault('file', sys.stderr)
+    kwargs.setdefault('flush', True)
     return print(*args, **kwargs)
 
 

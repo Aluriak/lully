@@ -20,6 +20,7 @@ def write_file(path: str, content: str):
     with open(path, 'w') as fd:
         fd.write(content)
     print(f"{len(content)} bytes written to {path}")
+write = write_file
 
 
 def list_tree(basedir: str, *, subdir: str = '', keep_basedir: bool = False) -> Iterable[str]:

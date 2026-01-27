@@ -135,12 +135,19 @@ def delta_from_pretty(string: str) -> datetime_mod.timedelta:
     3600.0
     >>> delta_from_pretty('-1m').total_seconds()
     -60.0
+    >>> delta_from_pretty('-1y').total_seconds()
+    -31449600.0
     """
-    AVAILABLE_UNITS = {'h': 'hours', 'H': 'hours', 'm': 'minutes', 'M': 'minutes', 'y': 'years', 'w': 'weeks', 'd': 'days', 's': 'seconds', 'S': 'seconds'}
+    AVAILABLE_UNITS = {'h': 'hours', 'H': 'hours', 'm': 'minutes', 'M': 'minutes', 'w': 'weeks', 'd': 'days', 's': 'seconds', 'S': 'seconds'}
+    SIMULATED_UNITS = {'y': ('d', 364), 'c': ('d', 364*100)}  # NOTE: those are not defined in seconds, but we offer them for convenience
     unit = string[-1]
     count = ast.literal_eval(string[:-1])
-    if string[-1] not in AVAILABLE_UNITS:
-        raise ValueError(f"Cannot handle unit {unit}: expects one of {','.join(AVAILABLE_UNITS)}")
+    if unit not in AVAILABLE_UNITS:
+        if unit in SIMULATED_UNITS:
+            unit, mult = SIMULATED_UNITS[unit]
+            count *= mult
+        else:
+            raise ValueError(f"Cannot handle unit {unit}: expects one of {''.join(AVAILABLE_UNITS)} or {''.join(SIMULATED_UNITS)}")
     assert isinstance(count, (int, float)), string
     return datetime_mod.timedelta(**{AVAILABLE_UNITS[unit]: count})
 
