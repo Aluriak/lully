@@ -18,7 +18,7 @@ typing:
 .PHONY: t tq test at
 
 
-upload:
+upload_on_pypi:
 	- rm -rf dist/
 	- python setup.py build sdist
 	- python -m twine upload dist/*
