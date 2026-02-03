@@ -4,104 +4,74 @@ import random
 import itertools
 import argparse
 
-from lully.words import NOUNS, ADJECTIVES
+import lully as ll
+from rich import print as printr
 
 
 
-nouns = set(NOUNS)
-adjs = set(ADJECTIVES)
-kind = 'n'
+KINDCOLOR = {'a': 'bold blue', 'n': 'bold green'}
+KINDNAME = {'a': 'Adjectif', 'n': 'Nom', 'b': 'Nom+Adjectif'}
+WORDS = {'a': set(ll.ADJECTIVES), 'n': set(ll.NOUNS)}
+cur_kind = 'n'
 
-def get_all_words(kind: str) -> set[str]:
-    return set(nouns if kind == 'n' else adjs)
+#cli_input=input(KINDNAME[kind]+': ')
+def get_words_per_kind(cli_input: list[str]) -> dict[str, set[str]]:
+    global cur_kind
+    words_per_kind = {k: [] for k in KINDNAME}
+    for w in cli_input:
+        if not w.strip(): continue
+        if w in KINDNAME:
+            cur_kind = w
+        else:
+            words_per_kind[cur_kind].append(w)
+    return collapse_b_kind(words_per_kind)
 
-def set_all_words(words: set[str], kind: str):
-    global nouns, adjs
-    if kind == 'n':
-        nouns = words
-    else:
-        adjs = words
+def collapse_b_kind(w_per_k: dict[str, list[str]]) -> dict[str, set[str]]:
+    if w_per_k['b']:
+        for one, two in ll.chunks(w_per_k['b'], n=2):
+            w_per_k['n'].append(one)
+            w_per_k['a'].append(two)
+    return {'n': set(w_per_k['n']), 'a': set(w_per_k['a'])}
+
 
 def save_words(fout: str = 'lully/words.py'):
     with open(fout, 'w') as fd:
         fd.write('NOUNS = (\n')
-        fd.write(''.join(f"    {repr(w)},\n" for w in sorted(list(nouns))))
+        fd.write(''.join(f"    {repr(w)},\n" for w in sorted(list(WORDS['n']))))
         fd.write(')\n\n')
         fd.write('ADJECTIVES = (\n')
-        fd.write(''.join(f"    {repr(w)},\n" for w in sorted(list(adjs))))
+        fd.write(''.join(f"    {repr(w)},\n" for w in sorted(list(WORDS['a']))))
         fd.write(')\n')
-    print(f"File {fout} written with {len(nouns)} nouns and {len(adjs)} adjectives")
+    printr(f"File {fout} written with {len(WORDS['n'])} [{KINDCOLOR['n']}]nouns[/{KINDCOLOR['n']}] and {len(WORDS['a'])} [{KINDCOLOR['a']}]adjectives[/{KINDCOLOR['a']}]")
+
 
 while True:
     added, existing = 0, 0
-    for new in input('Adjectif: ' if kind == 'a' else 'Nom: ').split():
-        new = new.title().strip()
-        words = get_all_words(kind=kind)
+    try:
+        news = get_words_per_kind(input(KINDNAME[cur_kind]+': ').split())
+    except KeyboardInterrupt:
+        break
+    # print('NEWS:', news)
+    for kind in news:
+        for new in news[kind]:
+            new = new.title().strip()
 
-        if new.lower() in {'a', 'n'}:
-            kind = new.lower()
-            words = get_all_words(kind=kind)
+            if new.startswith('-'):
+                new = new[1:].title()  # remove the leading dash
+                print(f'Remove {new} from {kind}… ', end='', flush=True)
+                if new in WORDS[kind]:
+                    WORDS[kind].remove(new)
+                    print("Done")
+                else:
+                    print("Did not exists")
 
-        elif new.startswith('-'):
-            new = new[1:].title()
-            print(f'Remove {new} from {kind}…')
-            if new in words:
-                words.remove(new)
-                set_all_words(words, kind=kind)
-            else:
-                print("Did not exists")
+            elif new in WORDS[kind]:
+                print(f'{new} is already present in {kind}')
+                existing += 1
 
-        elif new in words:
-            print(f'{new} is already present in {kind}')
-            existing += 1
-
-        elif new:  # new is not in words
-            words.add(new)
-            set_all_words(words, kind=kind)
-            print(f'{new} added to {kind}')
-            added += 1
+            elif new:  # new is not in words
+                WORDS[kind].add(new)
+                printr(f'[{KINDCOLOR[kind]}]{new}[/{KINDCOLOR[kind]}] added to {kind}')
+                added += 1
     print(f'Added: {added} \t Existing: {existing}')
     save_words()
-
-
-
-
-
-
-
-def add_group():
-    kind, *words_lists = map(str.lower, sys.argv[1:])
-    words = [w for w in set(itertools.chain.from_iterable(
-        map(str.title, map(str.strip, words.split(',')))
-        for words in words_lists
-    )) if w]
-
-    print(f"{len(words)} input words of kind {kind}.")
-
-    if kind in {'a', 'adj', 'adjective', 'adjectives'}:
-        kind = 'a'
-    elif kind in {'n', 'noun', 'nouns', 'noun', 'nom'}:
-        kind = 'n'
-    else:
-        print(f"Invalid {kind=}")
-        exit(1)
-
-
-
-    EXISTING = set(NOUNS if kind == 'n' else ADJECTIVES)
-    WORDS = set(words)
-    WHOLE = EXISTING | WORDS
-    NEW = WHOLE - EXISTING
-    NOTNEW = WORDS - NEW
-
-
-    print(f"Type : {'noms' if kind == 'n' else 'adjectifs'}")
-    print(f"Nouveaux mots : {len(NEW)} ({', '.join(NEW)})")
-    print(f"Déjà présents : {len(NOTNEW)} (eg {', '.join(random.sample(list(NOTNEW), min(10, len(NOTNEW))))})")
-    print(f"Total : {len(WHOLE)}")
-
-    with open('out.py', 'w') as fd:
-        fd.write(('NOUNS' if kind == 'n' else 'ADJECTIVES') + ' = (\n')
-        fd.write(''.join(f"    {repr(w)},\n" for w in sorted(list(WHOLE))))
-        fd.write(')\n')
-    print(f"File out.py written with all {kind}.")
