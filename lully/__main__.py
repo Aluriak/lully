@@ -23,7 +23,7 @@ def parse_cli() -> argparse.Namespace:
 def na2na(na: str) -> tuple[str, str]:
     return na.split(' ')
 
-def show_elements_repartition(stats: dict[str, int], elements: list[str] = sorted('ABCDEFGHIJKLMNOPQRSTUVWXYZÂÇÉÈÊÎŒ'), elem_to_elems = lambda x: [x], elem_to_key = lambda x: x[0], keep_count_on = lambda c: c>0, header: bool = True, leading: str = '') -> str:
+def show_elements_repartition(stats: dict[str, int], elements: list[str] = sorted('ABCDEFGHIJKLMNOPQRSTUVWXYZÂÇÉÈÊÎŒ'), elem_to_elems = lambda x: [x], elem_to_key = lambda x: x[0], keep_count_on = lambda c: c>0, header: bool = True, leading: str = ''):
         counts_per_elem = {l: 0 for l in elements}
         if not isinstance(stats, dict):
             stats = {v: 1 for v in stats}
@@ -65,7 +65,7 @@ if __name__ == '__main__':
             print(f"{duplicata} × {count}".ljust(14), f"{round(count/total_count*100,3)}% du total")
 
         print()
-        show_elements_repartition(words.NOUNS,                      leading='     nouns: ')
-        show_elements_repartition(words.ADJECTIVES, header=False,   leading='adjectives: ')
-        show_elements_repartition(stats, elem_to_elems=na2na,       leading='duplicates: ', keep_count_on=lambda c: c>1, header=False)
+        show_elements_repartition(words.NOUNS,      leading='     nouns: ')
+        show_elements_repartition(words.ADJECTIVES, leading='adjectives: ', header=False)
+        show_elements_repartition(stats,            leading='duplicates: ', header=False, keep_count_on=lambda c: c>1, elem_to_elems=na2na)
 
