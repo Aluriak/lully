@@ -1,5 +1,18 @@
 import re
 import json
+import bisect
+
+
+VBAR = " ▁▂▃▄▅▆▇█"
+CLOCK = '○◔◑◕●'
+FILL = '░▒▓█'
+
+def vgauge(x: float, blocks=VBAR, *, more='+', less='-') -> str:
+    if x < 0: return less
+    if x > 1: return more
+    N = len(blocks)
+    thresholds = [i / N for i in range(1, N + 1)]
+    return blocks[bisect.bisect_left(thresholds, x)]
 
 def markoji(text: str) -> str:
     "format from markdown and emojize"
