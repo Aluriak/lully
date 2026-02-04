@@ -15,8 +15,10 @@ def parse_cli() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     subs = parser.add_subparsers(dest='action', required=True)
 
-    ss = subs.add_parser('id', description='id')
+    ss = subs.add_parser('test-id', description='testing id generation')
     ss.add_argument('n', type=int, default=0, help="number of id to yield (0 for combination count)")
+    ss = subs.add_parser('id', description='id generation from input')
+    ss.add_argument('value', type=str, help="string to yield id from")
 
     return parser.parse_args()
 
@@ -63,6 +65,9 @@ if __name__ == '__main__':
     args = parse_cli()
 
     if args.action == 'id':
+        print(hashing.human_code(args.value))
+
+    if args.action == 'test-id':
         nb_comb = len(words.NOUNS) * len(words.ADJECTIVES)
         print(f"{len(words.NOUNS)} nouns × {len(words.ADJECTIVES)} adjectives = {nb_comb} combinations\n")
         nb_loop = int(args.n or nb_comb)
@@ -90,4 +95,3 @@ if __name__ == '__main__':
             "La somme sur les bytes va effectivement créer une gaussienne dans la répartition des entiers générés, et donc un biais de sur-représentation de certains indexes.\n"
             "La conséquence pratique est l'augmentation du nombre de collisions."
         )
-

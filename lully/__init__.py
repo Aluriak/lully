@@ -7,8 +7,9 @@ from typing import Optional
 
 has_import_error = False
 # optional dependancies are haunting
+from .shellmore import envvar_is_false
 def importlog(module: str, reason: Optional[str]):
-    if os.getenv('LULLY_SILENT_IMPORT_FAILURE', '').lower() not in {'1', 'y', 'yes', 'o', 'oui'}:
+    if envvar_is_false('LULLY_SILENT_IMPORT_FAILURE'):
         print(f"could not import lully.{module} module because of missing module {reason}", file=sys.stderr)
         global has_import_error
         has_import_error = True
@@ -49,6 +50,6 @@ from .funcmore import x as ẍ, y as ÿ
 if has_import_error:
     print("(to remove missing import logging, set LULLY_SILENT_IMPORT_FAILURE=1)", file=sys.stderr)
 
-if is_repl() and envvar_is_false('LULLY_DISABLE_REPL'):
-    print("Lully populated the REPL context with aliases. To prevent that behavior, set LULLY_DISABLE_REPL=1", file=sys.stderr)
+if envvar_is_true('LULLY_ENABLE_REPL', default=False):
     popglob(in_repl=True)
+    print("Lully populated the REPL context with aliases. To prevent that behavior, set LULLY_ENABLE_REPL=0", file=sys.stderr)

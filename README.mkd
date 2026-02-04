@@ -18,7 +18,7 @@ Populate global with cabalistic aliases and some of lully's objects.
     assert last('ab') == 'b'
     assert last('ab') == 'b'
 
-Will do this automatically in REPL mode if you import lully, and if `LULLY_DISABLE_REPL` is not set to 1.
+If `LULLY_ENABLE_REPL` is set to 1, it will do this automatically when importing lully.
 
 
 ## Funcmore
