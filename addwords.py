@@ -49,7 +49,7 @@ while True:
     added, existing = 0, 0
     try:
         news = get_words_per_kind(input(KINDNAME[cur_kind]+': ').split())
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, EOFError):
         break
     # print('NEWS:', news)
     for kind in news:
