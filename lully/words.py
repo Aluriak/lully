@@ -2675,6 +2675,7 @@ NOUNS = (
     'Tuile',
     'Tulipe',
     'Tunique',
+    'Turbulence',
     'Tuyauterie',
     'Typographie',
     'Tâche',
