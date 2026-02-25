@@ -19,6 +19,10 @@ try:
     from .debug import *
 except ImportError as err:
     importlog('debug', err.name)
+try:
+    from . import texty
+except ImportError as err:
+    importlog('texty', err.name)
 
 
 
