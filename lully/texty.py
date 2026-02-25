@@ -40,6 +40,6 @@ class Rule:
 
     def __init_subclass__(cls, base: bool = None, grammar_in_doc: bool = True, **kwargs):
         super().__init_subclass__(**kwargs)
-        cls.is_base = cls.__name__.startswith('Base') if base is None else bool(base)
-        cls.grammar_in_doc = bool(grammar_in_doc)
+        cls.is_base = cls.__name__.startswith('Base') if base is None else bool(base)  # type: ignore[attr-defined]
+        cls.grammar_in_doc = bool(grammar_in_doc)  # type: ignore[attr-defined]
         Rule.CLASSES.append(cls)

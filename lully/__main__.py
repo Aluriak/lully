@@ -4,6 +4,7 @@ import uuid
 import argparse
 import itertools
 from collections import Counter, defaultdict
+from typing import Union, Iterable
 
 from . import hashing, words, vgauge
 
