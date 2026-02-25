@@ -24,29 +24,29 @@ def parse_cli() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def na2na(na: str) -> tuple[str, str]:
+def na2na(na: str) -> Iterable[str]:
     return na.split(' ')
 
-def show_elements_repartition(stats: dict[str, int], elements: list[str] = sorted('ABCDEFGHIJKLMNOPQRSTUVWXYZÂÇÉÈÊÎŒ'), elem_to_elems = lambda x: [x], elem_to_key = lambda x: x[0], keep_count_on = lambda c: c>0, header: bool = True, leading: str = ''):
-        counts_per_elem = {l: 0 for l in elements}
-        if not isinstance(stats, dict):
-            stats = {v: 1 for v in stats}
-        for elems, count in stats.items():
-            if keep_count_on(count):
-                for elem in elem_to_elems(elems):
-                    counts_per_elem[elem_to_key(elem)] += count
-        max_counts = max(counts_per_elem.values())
-        #print(f"{counts_per_elem=}, {max_counts=} total_count={sum(counts_per_elem.values())}")
-        try:
-            counts_per_elem = {l: vgauge(counts_per_elem[l] / max_counts) for l in sorted(counts_per_elem)}
-        except ZeroDivisionError:
-            counts_per_elem = {l: '.' for l in sorted(counts_per_elem)}
+def show_elements_repartition(stats: Union[Iterable[str], dict[str, int]], elements: list[str] = sorted('ABCDEFGHIJKLMNOPQRSTUVWXYZÂÇÉÈÊÎŒ'), elem_to_elems = lambda x: [x], elem_to_key = lambda x: x[0], keep_count_on = lambda c: c>0, header: bool = True, leading: str = ''):
+    counts_per_elem = {l: 0 for l in elements}
+    if not isinstance(stats, dict):
+        stats = {v: 1 for v in stats}
+    for elems, count in stats.items():
+        if keep_count_on(count):
+            for elem in elem_to_elems(elems):
+                counts_per_elem[elem_to_key(elem)] += count
+    max_counts = max(counts_per_elem.values())
+    #print(f"{counts_per_elem=}, {max_counts=} total_count={sum(counts_per_elem.values())}")
+    try:
+        gauges = {l: vgauge(counts_per_elem[l] / max_counts) for l in sorted(counts_per_elem)}
+    except ZeroDivisionError:
+        gauges = {l: '.' for l in sorted(counts_per_elem)}
 
-        if header:
-            ret = ' '*len(leading) + ''.join(str(v) for v in counts_per_elem.keys()) + '\n'
-        else:
-            ret = ''
-        print( ret + leading + ''.join(str(v) for v in counts_per_elem.values()) )
+    if header:
+        ret = ' '*len(leading) + ''.join(str(v) for v in gauges.keys()) + '\n'
+    else:
+        ret = ''
+    print( ret + leading + ''.join(str(v) for v in gauges.values()) )
 
 def produce_codes(nb_loop: int, use_uuid:bool = True, **kwargs):
     codes = []

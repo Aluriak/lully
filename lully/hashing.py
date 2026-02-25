@@ -1,16 +1,11 @@
-import uuid
 import hashlib
-import functools
 from warnings import warn
-from typing import Union
 from .words import NOUNS, ADJECTIVES
 
 
-def human_code(value: Union[str, uuid.UUID], *, CHUNK_SIZE: int = 40, method_sum: bool = False) -> str:
+def human_code(value: object, *, CHUNK_SIZE: int = 40, method_sum: bool = False) -> str:
     if method_sum:
-        warn(f"Sum method is not statistically sound. You will see a sur-representation of some indexes, thus a increase in collision number")
-    if isinstance(value, uuid.UUID):
-        value: str = str(value)
+        warn("Sum method is not statistically sound. You will see a sur-representation of some indexes, thus an increase in collision number")
     h = hashlib.blake2b(digest_size=CHUNK_SIZE, usedforsecurity=False)
     h.update(str(value).encode())
     if method_sum:
