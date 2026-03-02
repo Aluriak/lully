@@ -1,6 +1,9 @@
 
 at: styling typing tqf
 
+aw:
+	venv/bin/python addwords.py
+
 
 tqf: tq
 tq:
