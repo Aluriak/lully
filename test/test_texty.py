@@ -5,15 +5,15 @@ def test_basic_api():
     class BaseObject(ty.Rule):
         "(n=Percent|n=NAmongK) kind=/[a-zA-Z]+/"
         def show(self):
-            return self.n.show() + ' ' + str(self.kind).upper()
+            return self.n.show() + ' ' + str(self.kind).upper()  #type: ignore[attr-defined]
     class Percent(ty.Rule):
         "(q='100'|q=/[0-9]/|q=/[1-9][0-9]/) '%'"
         def show(self):
-            return f'{self.q}%'
+            return f'{self.q}%'  #type: ignore[attr-defined]
     class NAmongK(ty.Rule):
         "n=INT ('among'|'in') k=INT"
         def show(self):
-            return f'{round(self.n / self.k * 100)}%'  #gg
+            return f'{round(self.n / self.k * 100)}%'  #type: ignore[attr-defined]
 
     assert ty.parse_text('3 in 50 success').show() == '6% SUCCESS'
     assert ty.parse_text('1 in 2 success').show() == '50% SUCCESS'
