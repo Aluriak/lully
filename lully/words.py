@@ -5713,7 +5713,7 @@ ADJECTIVES = (
     'Saccadée',
     'Sacrée',
     'Sage',
-    'Saillantes',
+    'Saillante',
     'Salie',
     'Salutaire',
     'Salvatrice',

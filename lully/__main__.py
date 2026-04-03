@@ -1,6 +1,7 @@
 """"""
 
 import uuid
+import random
 import argparse
 import itertools
 from collections import Counter, defaultdict
@@ -20,6 +21,10 @@ def parse_cli() -> argparse.Namespace:
     ss.add_argument('n', type=int, default=0, help="number of id to yield (0 for combination count)")
     ss = subs.add_parser('id', description='id generation from input')
     ss.add_argument('value', type=str, help="string to yield id from")
+    ss = subs.add_parser('ids', description='id generation from input')
+    ss.add_argument('nb', nargs='?', type=int, help="number of code to yield", default=10)
+    ss.add_argument('--sep', '-s', type=str, help="separators between codes", default='\n- ')
+    ss.add_argument('--use-uuid', '-u', action='store_true', help="use uuids")
 
     return parser.parse_args()
 
@@ -67,6 +72,12 @@ if __name__ == '__main__':
 
     if args.action == 'id':
         print(hashing.human_code(args.value))
+
+    if args.action == 'ids':
+        nb_comb = len(words.NOUNS) * len(words.ADJECTIVES)
+        print(f"{len(words.NOUNS)} nouns × {len(words.ADJECTIVES)} adjectives = {nb_comb} combinations\n")
+        vs = lambda v, r=random.randint(1,1e10): uuid.uuid4() if args.use_uuid else (v+r)
+        print(args.sep + args.sep.join(hashing.human_code(vs(v)) for v in range(args.nb)))
 
     if args.action == 'test-id':
         nb_comb = len(words.NOUNS) * len(words.ADJECTIVES)
