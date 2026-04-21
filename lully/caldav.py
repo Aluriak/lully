@@ -1,5 +1,5 @@
 
-import caldav
+import caldav as caldav_module
 import lully as ll
 from typing import Union
 from datetime import date
@@ -21,7 +21,7 @@ def add_birthday(name, birthdate: Union[tuple[int, int, int], date], *, minage: 
     birthdate = ll.dateutils.date_from_object(birthdate)
 
     events = []  # list of created events
-    with caldav.DAVClient(url=ll.url.with_scheme(url), username=usr, password=pwd) as client:
+    with caldav_module.DAVClient(url=ll.url.with_scheme(url), username=usr, password=pwd) as client:
         # Operations with the client object
         principal = client.principal()
         calendar = principal.calendar(cal_id=calid)
