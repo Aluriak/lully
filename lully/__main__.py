@@ -76,7 +76,7 @@ if __name__ == '__main__':
     if args.action == 'ids':
         nb_comb = len(words.NOUNS) * len(words.ADJECTIVES)
         print(f"{len(words.NOUNS)} nouns × {len(words.ADJECTIVES)} adjectives = {nb_comb} combinations\n")
-        vs = lambda v, r=random.randint(1,1e10): uuid.uuid4() if args.use_uuid else (v+r)
+        vs = lambda v, r=random.randint(1,int(1e10)): uuid.uuid4() if args.use_uuid else (v+r)
         print(args.sep + args.sep.join(hashing.human_code(vs(v)) for v in range(args.nb)))
 
     if args.action == 'test-id':

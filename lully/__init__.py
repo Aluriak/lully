@@ -23,6 +23,10 @@ try:
     from . import texty
 except ImportError as err:
     importlog('texty', err.name)
+try:
+    from . import caldav
+except ImportError as err:
+    importlog('caldav', err.name)
 
 
 
