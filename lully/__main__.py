@@ -7,7 +7,7 @@ import itertools
 from collections import Counter, defaultdict
 from typing import Union, Iterable
 
-from . import hashing, words, vgauge, stats
+from . import hashing, words, vgauge, stats as lully_stats
 
 
 
@@ -88,7 +88,7 @@ if __name__ == '__main__':
         nb_comb = len(words.NOUNS) * len(words.ADJECTIVES)
         print(f"{len(words.NOUNS)} nouns × {len(words.ADJECTIVES)} adjectives = {nb_comb} combinations\n")
         nb_loop = int(args.n or nb_comb)
-        stats = {}
+        stats: dict = {}
         for exp, (arg_uuid, arg_sum) in enumerate(itertools.product((True, False), repeat=2), start=1):
             print(f"\nExperiment {exp} use uuid={arg_uuid} sum={arg_sum}")
             codes = produce_codes(nb_loop, use_uuid=arg_uuid, method_sum=arg_sum)
@@ -116,7 +116,7 @@ if __name__ == '__main__':
 
     if args.action == 'hyperg':
         print(f"Pour une sous-population de {args.subpop} dans {args.pop}, on prend un échantillon de {args.sample} contenant {args.subsample} de la sous-population :")
-        r = stats.hypergeometric_test_diagnostic(args.pop, args.subpop, args.sample, args.subsample)
+        r = lully_stats.hypergeometric_test_diagnostic(args.pop, args.subpop, args.sample, args.subsample)
         keylen = max(map(len, r))
         for k, v in r.items():
             print(f"  {k.rjust(keylen)}: {v}")
