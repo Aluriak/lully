@@ -7,9 +7,8 @@ import itertools
 from collections import Counter, defaultdict
 from typing import Union, Iterable
 
-from . import hashing, words, vgauge
+from . import hashing, words, vgauge, stats
 
-import bisect
 
 
 
@@ -25,6 +24,12 @@ def parse_cli() -> argparse.Namespace:
     ss.add_argument('nb', nargs='?', type=int, help="number of code to yield", default=10)
     ss.add_argument('--sep', '-s', type=str, help="separators between codes", default='\n- ')
     ss.add_argument('--use-uuid', '-u', action='store_true', help="use uuids")
+
+    ss = subs.add_parser('hyperg', description='test hypergéométrique')
+    ss.add_argument('pop', type=int, help="total population size")
+    ss.add_argument('subpop', type=int, help="sub-population size")
+    ss.add_argument('sample', type=int, help="total sample size")
+    ss.add_argument('subsample', type=int, help="sub-sample size")
 
     return parser.parse_args()
 
@@ -107,3 +112,11 @@ if __name__ == '__main__':
             "La somme sur les bytes va effectivement créer une gaussienne dans la répartition des entiers générés, et donc un biais de sur-représentation de certains indexes.\n"
             "La conséquence pratique est l'augmentation du nombre de collisions."
         )
+
+
+    if args.action == 'hyperg':
+        print(f"Pour une sous-population de {args.subpop} dans {args.pop}, on prend un échantillon de {args.sample} contenant {args.subsample} de la sous-population :")
+        r = stats.hypergeometric_test_diagnostic(args.pop, args.subpop, args.sample, args.subsample)
+        keylen = max(map(len, r))
+        for k, v in r.items():
+            print(f"  {k.rjust(keylen)}: {v}")
