@@ -24,7 +24,7 @@ FIELDS = [
         "anacoluthe", "antanaclase", "antonomase", "asyndète", "litote", "métaphore",
         "métonymie", "anaphore", "antithèse", "paronomase", "hyperbate", "parembole",
         "allitération", "anadiplose", "apostrophe", "hypallage", "hyperbole", "allégorie",
-        "synecdoque", "chiasme", "oxymore", "zeugme", "ellipse", "antiphrase", "périphrase",
+        "synecdoque", "ellipse", "antiphrase", "périphrase",
         "tautologie", "gradation", "comparaison", "personnification",
     ], ""),
     ("Sciences savantes en -logie / -graphie", "N", [
@@ -129,7 +129,7 @@ FIELDS = [
     ], ""),
     ("Vocabulaire logiciel / dev", "N", [
         "application", "numérisation", "robotique", "informatique", "connexion",
-        "interface", "plateforme", "algorithme", "cybersécurité", "intelligence", "base",
+        "interface", "plateforme", "algorithmique", "cybersécurité", "intelligence", "base",
         "donnée", "messagerie", "notification", "synchronisation", "virtualisation",
         "modélisation", "instanciation", "journalisation",
     ], "un clin d'œil facile pour qui code : ce champ parlera à Lucas plus qu'au grand public"),
@@ -141,16 +141,16 @@ FIELDS = [
     ("Sport & activités physiques", "N", [
         "natation", "gymnastique", "compétition", "course", "mêlée", "escalade",
         "randonnée", "plongée", "boxe", "lutte", "escrime", "équitation", "voile",
-        "aviron", "ski",
+        "luge", "pétanque",
     ], ""),
     ("Écologie & environnement", "N", [
-        "biodiversité", "pollution", "recyclage", "reforestation", "surpêche",
+        "biodiversité", "pollution", "biomasse", "reforestation", "surpêche",
         "déforestation", "canicule", "sécheresse", "empreinte", "transition",
-        "permaculture", "écosystème",
+        "permaculture", "renaturation",
     ], ""),
     ("Espace, astronomie concrète", "N", [
         "comète", "galaxie", "nébuleuse", "étoile", "supernova", "constellation",
-        "météorite", "exoplanète", "orbite", "astéroïde",
+        "météorite", "exoplanète", "orbite",
     ], ""),
     ("Registre familier léger", "N", [
         "bagnole", "gueule", "fringue", "bouffe", "galère", "embrouille", "combine",
@@ -171,7 +171,7 @@ FIELDS = [
         "ancestrale", "cousine", "gémellaire", "adoptive", "veuve", "célibataire",
     ], ""),
     ("Numérique grand public (IA, réseaux, smartphone)", "N", [
-        "robotique", "cybersécurité", "réseau-social", "publication", "story",
+        "robotique", "cybersécurité", "intelligence-artificielle", "publication", "story",
         "notification", "selfie", "messagerie", "vidéoconférence", "géolocalisation",
         "authentification", "biométrie", "domotique", "réalité-virtuelle", "blockchain",
         "cryptomonnaie",
