@@ -37,7 +37,7 @@ def parse_cli() -> argparse.Namespace:
 def na2na(na: str) -> Iterable[str]:
     return na.split(' ')
 
-def show_elements_repartition(stats: Union[Iterable[str], dict[str, int]], elements: list[str] = sorted('ABCDEFGHIJKLMNOPQRSTUVWXYZÂÇÉÈÊÎŒ'), elem_to_elems = lambda x: [x], elem_to_key = lambda x: x[0], keep_count_on = lambda c: c>0, header: bool = True, leading: str = ''):
+def show_elements_repartition(stats: Union[Iterable[str], dict[str, int]], elements: list[str] = sorted('ABCDEFGHIJKLMNOPQRSTUVWXYZÂÇÉÈÊÎÔÛŒ'), elem_to_elems = lambda x: [x], elem_to_key = lambda x: x[0], keep_count_on = lambda c: c>0, header: bool = True, leading: str = ''):
     counts_per_elem = {l: 0 for l in elements}
     if not isinstance(stats, dict):
         stats = {v: 1 for v in stats}
