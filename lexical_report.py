@@ -489,6 +489,7 @@ TEMPLATE = """<title>Lully — champs lexicaux à compléter</title>
     font-size: 0.82rem; color: var(--ink-soft); max-width: 62ch;
   }}
   footer.legend p {{ margin: 0 0 0.6rem; }}
+  footer.legend a {{ color: var(--missing); }}
 
   @media (max-width: 480px) {{
     main {{ padding: 1.5rem 0.85rem 4rem; }}
@@ -528,7 +529,9 @@ TEMPLATE = """<title>Lully — champs lexicaux à compléter</title>
     vérifiée mot à mot (insensible à la casse) contre le corpus actuel. Un champ à 90 % n'a
     pas forcément 90 % du vocabulaire français du domaine — seulement 90 % des mots-témoins
     choisis. Les tiers (bien / partiellement / peu couverts) sont recalculés à chaque
-    génération, à partir de l'état courant du corpus.</p>
+    génération, à partir de l'état courant du corpus. Envie de piocher plus large que ces
+    33 champs ? Voir les <a href="candidates.html">mots candidats</a> (14&nbsp;000+ noms,
+    12&nbsp;000+ adjectifs, tirés du Wiktionnaire).</p>
     <p>{generated_line}</p>
   </footer>
 </main>
