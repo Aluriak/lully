@@ -1,0 +1,888 @@
+<title>Lully — distribution par lettre</title>
+<style>
+  @media (prefers-color-scheme: light) { :root { color-scheme: light; } }
+  @media (prefers-color-scheme: dark) { :root { color-scheme: dark; } }
+
+  :root {
+    --paper: #e7e2d2; --paper-raised: #f4f0e2; --ink: #22291f; --ink-soft: #5a5d4d;
+    --line: #c9c2a4;
+    --series-lully: #1baf7a; --series-ref: #2a78d6;
+    --over-soft: #f3e2dc; --over: #8c3f33;
+    --under-soft: #dde3ee; --under: #2a78d6;
+    --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #1b211c; --paper-raised: #232921; --ink: #e9e4d3; --ink-soft: #a9a491;
+      --line: #3c4335; --series-lully: #199e70; --series-ref: #3987e5;
+      --over-soft: #3c2723; --over: #cf7767; --under-soft: #262d3c; --under: #8fabd6;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #1b211c; --paper-raised: #232921; --ink: #e9e4d3; --ink-soft: #a9a491;
+    --line: #3c4335; --series-lully: #199e70; --series-ref: #3987e5;
+    --over-soft: #3c2723; --over: #cf7767; --under-soft: #262d3c; --under: #8fabd6;
+  }
+  :root[data-theme="light"] {
+    --paper: #e7e2d2; --paper-raised: #f4f0e2; --ink: #22291f; --ink-soft: #5a5d4d;
+    --line: #c9c2a4; --series-lully: #1baf7a; --series-ref: #2a78d6;
+    --over-soft: #f3e2dc; --over: #8c3f33; --under-soft: #dde3ee; --under: #2a78d6;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper); color: var(--ink); font-family: var(--font-body);
+    line-height: 1.5; -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 880px; margin: 0 auto; padding: 2.25rem 1.25rem 5rem; }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-soft);
+  }
+  h1 {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: clamp(1.6rem, 5vw, 2.35rem); margin: 0.35rem 0 0.6rem; text-wrap: balance;
+  }
+  .lede { max-width: 62ch; color: var(--ink-soft); font-size: 0.98rem; margin-bottom: 2rem; }
+  .lede code { color: var(--ink); }
+
+  h2.section-title {
+    font-family: var(--font-display); font-size: 1.35rem; font-weight: 600;
+    display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap;
+    margin: 2.5rem 0 1rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--line);
+  }
+  .section-count { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 400; color: var(--ink-soft); }
+
+  .callouts { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .callout { flex: 1 1 220px; }
+  .callout-label {
+    display: block; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.35rem;
+  }
+  .chip { font-size: 0.8rem; border-radius: 20px; padding: 0.15rem 0.6rem; border: 1px solid var(--line); }
+  .chip--over { background: var(--over-soft); color: var(--over); border-color: var(--over); }
+  .chip--under { background: var(--under-soft); color: var(--under); border-color: var(--under); }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+
+  .legend {
+    display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: 0.8rem;
+    color: var(--ink-soft); margin-bottom: 1.1rem;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .swatch { width: 0.65rem; height: 0.65rem; border-radius: 50%; display: inline-block; }
+  .swatch--lully { background: var(--series-lully); }
+  .swatch--ref { background: var(--series-ref); }
+
+  .chart { display: flex; flex-direction: column; gap: 0.55rem; }
+  .letter-row { display: grid; grid-template-columns: 1.4rem 1fr auto; align-items: center; gap: 0.7rem; }
+  .letter-label { font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; text-align: center; }
+  .track {
+    position: relative; height: 1.15rem; background: var(--paper-raised);
+    border-radius: 3px; border: 1px solid var(--line);
+  }
+  .connector { position: absolute; top: 50%; height: 2px; background: var(--ink-soft); transform: translateY(-50%); opacity: 0.5; }
+  .dot {
+    position: absolute; top: 50%; width: 11px; height: 11px; border-radius: 50%;
+    transform: translate(-50%, -50%); border: 2px solid var(--paper-raised);
+  }
+  .dot--lully { background: var(--series-lully); }
+  .dot--ref { background: var(--series-ref); }
+  .value-labels {
+    font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-soft);
+    white-space: nowrap; text-align: right;
+  }
+  .value-labels b { color: var(--ink); font-weight: 600; }
+  .value-labels .vs { opacity: 0.55; }
+  .delta { display: inline-block; min-width: 2.6rem; text-align: right; }
+  .delta--over { color: var(--over); }
+  .delta--under { color: var(--under); }
+
+  .table-toggle { margin-top: 1.5rem; font-size: 0.85rem; }
+  .table-toggle summary { cursor: pointer; color: var(--ink-soft); }
+  .table-wrap { overflow-x: auto; margin-top: 0.6rem; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+  th, td { text-align: right; padding: 0.3rem 0.6rem; border-bottom: 1px solid var(--line); }
+  th:first-child, td:first-child { text-align: left; font-family: var(--font-display); font-weight: 600; }
+  th { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; color: var(--ink-soft); font-weight: 400; }
+
+  footer.legend-note {
+    margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
+    font-size: 0.82rem; color: var(--ink-soft); max-width: 62ch;
+  }
+  footer.legend-note a { color: var(--series-ref); }
+
+  @media (max-width: 480px) {
+    main { padding: 1.5rem 0.85rem 4rem; }
+    .value-labels { font-size: 0.66rem; }
+  }
+</style>
+
+<main>
+  <header>
+    <p class="eyebrow">Lully · distribution par lettre</p>
+    <h1>Ton corpus favorise-t-il certaines lettres ?</h1>
+    <p class="lede">
+      Chaque ligne compare, pour une lettre donnée, sa part dans <code>lully/words.py</code>
+      (point vert) contre sa part dans le grand bassin de mots du Wiktionnaire non trié
+      par toi (point bleu, <code>candidate_words.json</code>) — un échantillon large et
+      indépendant de tes propres choix, pas "tout le français", mais un bon témoin neutre.
+      Un point vert à droite du bleu = lettre sur-représentée chez toi ; à gauche = sous-représentée.
+    </p>
+  </header>
+  
+  <section class="letter-section" id="noms">
+    <h2 class="section-title">Noms <span class="section-count">3700 vs 14653 (référence)</span></h2>
+    <div class="callouts">
+      <div class="callout"><span class="callout-label">Sur-représentées</span><div class="chips"><span class="chip chip--over">C +3.7</span><span class="chip chip--over">F +1.6</span><span class="chip chip--over">A +1.5</span></div></div>
+      <div class="callout"><span class="callout-label">Sous-représentées</span><div class="chips"><span class="chip chip--under">I -2.4</span><span class="chip chip--under">S -1.8</span><span class="chip chip--under">H -1.7</span></div></div>
+    </div>
+    <div class="legend">
+      <span><span class="swatch swatch--lully"></span> Corpus Lully</span>
+      <span><span class="swatch swatch--ref"></span> Référence (pool Wiktionary, non triée par Lucas)</span>
+    </div>
+    <div class="chart">
+        <div class="letter-row">
+          <span class="letter-label">A</span>
+          <div class="track">
+            <div class="connector" style="left:50.46%; width:8.92%"></div>
+            <div class="dot dot--ref" style="left:50.46%"
+                 title="Référence : 1225 mots (8.4 %)"></div>
+            <div class="dot dot--lully" style="left:59.38%"
+                 title="Corpus Lully : 364 mots (9.8 %)"></div>
+          </div>
+          <span class="value-labels"><b>9.8%</b> <span class="vs">vs</span> 8.4%
+            <span class="delta delta--over">+1.5</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">B</span>
+          <div class="track">
+            <div class="connector" style="left:31.14%; width:7.36%"></div>
+            <div class="dot dot--ref" style="left:31.14%"
+                 title="Référence : 756 mots (5.2 %)"></div>
+            <div class="dot dot--lully" style="left:38.50%"
+                 title="Corpus Lully : 236 mots (6.4 %)"></div>
+          </div>
+          <span class="value-labels"><b>6.4%</b> <span class="vs">vs</span> 5.2%
+            <span class="delta delta--over">+1.2</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">C</span>
+          <div class="track">
+            <div class="connector" style="left:64.59%; width:22.36%"></div>
+            <div class="dot dot--ref" style="left:64.59%"
+                 title="Référence : 1568 mots (10.7 %)"></div>
+            <div class="dot dot--lully" style="left:86.96%"
+                 title="Corpus Lully : 533 mots (14.4 %)"></div>
+          </div>
+          <span class="value-labels"><b>14.4%</b> <span class="vs">vs</span> 10.7%
+            <span class="delta delta--over">+3.7</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">D</span>
+          <div class="track">
+            <div class="connector" style="left:26.10%; width:9.78%"></div>
+            <div class="dot dot--ref" style="left:35.88%"
+                 title="Référence : 871 mots (5.9 %)"></div>
+            <div class="dot dot--lully" style="left:26.10%"
+                 title="Corpus Lully : 160 mots (4.3 %)"></div>
+          </div>
+          <span class="value-labels"><b>4.3%</b> <span class="vs">vs</span> 5.9%
+            <span class="delta delta--under">-1.6</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">E</span>
+          <div class="track">
+            <div class="connector" style="left:32.34%; width:5.02%"></div>
+            <div class="dot dot--ref" style="left:32.34%"
+                 title="Référence : 785 mots (5.4 %)"></div>
+            <div class="dot dot--lully" style="left:37.36%"
+                 title="Corpus Lully : 229 mots (6.2 %)"></div>
+          </div>
+          <span class="value-labels"><b>6.2%</b> <span class="vs">vs</span> 5.4%
+            <span class="delta delta--over">+0.8</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">F</span>
+          <div class="track">
+            <div class="connector" style="left:21.34%; width:9.50%"></div>
+            <div class="dot dot--ref" style="left:21.34%"
+                 title="Référence : 518 mots (3.5 %)"></div>
+            <div class="dot dot--lully" style="left:30.83%"
+                 title="Corpus Lully : 189 mots (5.1 %)"></div>
+          </div>
+          <span class="value-labels"><b>5.1%</b> <span class="vs">vs</span> 3.5%
+            <span class="delta delta--over">+1.6</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">G</span>
+          <div class="track">
+            <div class="connector" style="left:22.35%; width:0.31%"></div>
+            <div class="dot dot--ref" style="left:22.66%"
+                 title="Référence : 550 mots (3.8 %)"></div>
+            <div class="dot dot--lully" style="left:22.35%"
+                 title="Corpus Lully : 137 mots (3.7 %)"></div>
+          </div>
+          <span class="value-labels"><b>3.7%</b> <span class="vs">vs</span> 3.8%
+            <span class="delta delta--under">-0.1</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">H</span>
+          <div class="track">
+            <div class="connector" style="left:12.40%; width:10.46%"></div>
+            <div class="dot dot--ref" style="left:22.86%"
+                 title="Référence : 555 mots (3.8 %)"></div>
+            <div class="dot dot--lully" style="left:12.40%"
+                 title="Corpus Lully : 76 mots (2.1 %)"></div>
+          </div>
+          <span class="value-labels"><b>2.1%</b> <span class="vs">vs</span> 3.8%
+            <span class="delta delta--under">-1.7</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">I</span>
+          <div class="track">
+            <div class="connector" style="left:14.19%; width:14.23%"></div>
+            <div class="dot dot--ref" style="left:28.42%"
+                 title="Référence : 690 mots (4.7 %)"></div>
+            <div class="dot dot--lully" style="left:14.19%"
+                 title="Corpus Lully : 87 mots (2.4 %)"></div>
+          </div>
+          <span class="value-labels"><b>2.4%</b> <span class="vs">vs</span> 4.7%
+            <span class="delta delta--under">-2.4</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">J</span>
+          <div class="track">
+            <div class="connector" style="left:4.08%; width:3.92%"></div>
+            <div class="dot dot--ref" style="left:4.08%"
+                 title="Référence : 99 mots (0.7 %)"></div>
+            <div class="dot dot--lully" style="left:7.99%"
+                 title="Corpus Lully : 49 mots (1.3 %)"></div>
+          </div>
+          <span class="value-labels"><b>1.3%</b> <span class="vs">vs</span> 0.7%
+            <span class="delta delta--over">+0.6</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">K</span>
+          <div class="track">
+            <div class="connector" style="left:2.35%; width:0.26%"></div>
+            <div class="dot dot--ref" style="left:2.35%"
+                 title="Référence : 57 mots (0.4 %)"></div>
+            <div class="dot dot--lully" style="left:2.61%"
+                 title="Corpus Lully : 16 mots (0.4 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.4%</b> <span class="vs">vs</span> 0.4%
+            <span class="delta delta--over">+0.0</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">L</span>
+          <div class="track">
+            <div class="connector" style="left:17.30%; width:2.93%"></div>
+            <div class="dot dot--ref" style="left:17.30%"
+                 title="Référence : 420 mots (2.9 %)"></div>
+            <div class="dot dot--lully" style="left:20.23%"
+                 title="Corpus Lully : 124 mots (3.4 %)"></div>
+          </div>
+          <span class="value-labels"><b>3.4%</b> <span class="vs">vs</span> 2.9%
+            <span class="delta delta--over">+0.5</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">M</span>
+          <div class="track">
+            <div class="connector" style="left:39.15%; width:3.69%"></div>
+            <div class="dot dot--ref" style="left:42.84%"
+                 title="Référence : 1040 mots (7.1 %)"></div>
+            <div class="dot dot--lully" style="left:39.15%"
+                 title="Corpus Lully : 240 mots (6.5 %)"></div>
+          </div>
+          <span class="value-labels"><b>6.5%</b> <span class="vs">vs</span> 7.1%
+            <span class="delta delta--under">-0.6</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">N</span>
+          <div class="track">
+            <div class="connector" style="left:12.15%; width:1.39%"></div>
+            <div class="dot dot--ref" style="left:12.15%"
+                 title="Référence : 295 mots (2.0 %)"></div>
+            <div class="dot dot--lully" style="left:13.54%"
+                 title="Corpus Lully : 83 mots (2.2 %)"></div>
+          </div>
+          <span class="value-labels"><b>2.2%</b> <span class="vs">vs</span> 2.0%
+            <span class="delta delta--over">+0.2</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">O</span>
+          <div class="track">
+            <div class="connector" style="left:10.44%; width:5.42%"></div>
+            <div class="dot dot--ref" style="left:15.86%"
+                 title="Référence : 385 mots (2.6 %)"></div>
+            <div class="dot dot--lully" style="left:10.44%"
+                 title="Corpus Lully : 64 mots (1.7 %)"></div>
+          </div>
+          <span class="value-labels"><b>1.7%</b> <span class="vs">vs</span> 2.6%
+            <span class="delta delta--under">-0.9</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">P</span>
+          <div class="track">
+            <div class="connector" style="left:59.87%; width:2.29%"></div>
+            <div class="dot dot--ref" style="left:62.16%"
+                 title="Référence : 1509 mots (10.3 %)"></div>
+            <div class="dot dot--lully" style="left:59.87%"
+                 title="Corpus Lully : 367 mots (9.9 %)"></div>
+          </div>
+          <span class="value-labels"><b>9.9%</b> <span class="vs">vs</span> 10.3%
+            <span class="delta delta--under">-0.4</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">Q</span>
+          <div class="track">
+            <div class="connector" style="left:2.55%; width:0.22%"></div>
+            <div class="dot dot--ref" style="left:2.55%"
+                 title="Référence : 62 mots (0.4 %)"></div>
+            <div class="dot dot--lully" style="left:2.77%"
+                 title="Corpus Lully : 17 mots (0.5 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.5%</b> <span class="vs">vs</span> 0.4%
+            <span class="delta delta--over">+0.0</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">R</span>
+          <div class="track">
+            <div class="connector" style="left:28.84%; width:0.53%"></div>
+            <div class="dot dot--ref" style="left:28.84%"
+                 title="Référence : 700 mots (4.8 %)"></div>
+            <div class="dot dot--lully" style="left:29.37%"
+                 title="Corpus Lully : 180 mots (4.9 %)"></div>
+          </div>
+          <span class="value-labels"><b>4.9%</b> <span class="vs">vs</span> 4.8%
+            <span class="delta delta--over">+0.1</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">S</span>
+          <div class="track">
+            <div class="connector" style="left:34.42%; width:10.64%"></div>
+            <div class="dot dot--ref" style="left:45.07%"
+                 title="Référence : 1094 mots (7.5 %)"></div>
+            <div class="dot dot--lully" style="left:34.42%"
+                 title="Corpus Lully : 211 mots (5.7 %)"></div>
+          </div>
+          <span class="value-labels"><b>5.7%</b> <span class="vs">vs</span> 7.5%
+            <span class="delta delta--under">-1.8</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">T</span>
+          <div class="track">
+            <div class="connector" style="left:27.41%; width:3.57%"></div>
+            <div class="dot dot--ref" style="left:30.98%"
+                 title="Référence : 752 mots (5.1 %)"></div>
+            <div class="dot dot--lully" style="left:27.41%"
+                 title="Corpus Lully : 168 mots (4.5 %)"></div>
+          </div>
+          <span class="value-labels"><b>4.5%</b> <span class="vs">vs</span> 5.1%
+            <span class="delta delta--under">-0.6</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">U</span>
+          <div class="track">
+            <div class="connector" style="left:2.45%; width:0.48%"></div>
+            <div class="dot dot--ref" style="left:2.92%"
+                 title="Référence : 71 mots (0.5 %)"></div>
+            <div class="dot dot--lully" style="left:2.45%"
+                 title="Corpus Lully : 15 mots (0.4 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.4%</b> <span class="vs">vs</span> 0.5%
+            <span class="delta delta--under">-0.1</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">V</span>
+          <div class="track">
+            <div class="connector" style="left:14.75%; width:5.16%"></div>
+            <div class="dot dot--ref" style="left:14.75%"
+                 title="Référence : 358 mots (2.4 %)"></div>
+            <div class="dot dot--lully" style="left:19.90%"
+                 title="Corpus Lully : 122 mots (3.3 %)"></div>
+          </div>
+          <span class="value-labels"><b>3.3%</b> <span class="vs">vs</span> 2.4%
+            <span class="delta delta--over">+0.9</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">W</span>
+          <div class="track">
+            <div class="connector" style="left:0.78%; width:0.36%"></div>
+            <div class="dot dot--ref" style="left:0.78%"
+                 title="Référence : 19 mots (0.1 %)"></div>
+            <div class="dot dot--lully" style="left:1.14%"
+                 title="Corpus Lully : 7 mots (0.2 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.2%</b> <span class="vs">vs</span> 0.1%
+            <span class="delta delta--over">+0.1</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">X</span>
+          <div class="track">
+            <div class="connector" style="left:0.98%; width:1.16%"></div>
+            <div class="dot dot--ref" style="left:2.14%"
+                 title="Référence : 52 mots (0.4 %)"></div>
+            <div class="dot dot--lully" style="left:0.98%"
+                 title="Corpus Lully : 6 mots (0.2 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.2%</b> <span class="vs">vs</span> 0.4%
+            <span class="delta delta--under">-0.2</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">Y</span>
+          <div class="track">
+            <div class="connector" style="left:0.82%; width:0.54%"></div>
+            <div class="dot dot--ref" style="left:1.36%"
+                 title="Référence : 33 mots (0.2 %)"></div>
+            <div class="dot dot--lully" style="left:0.82%"
+                 title="Corpus Lully : 5 mots (0.1 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.1%</b> <span class="vs">vs</span> 0.2%
+            <span class="delta delta--under">-0.1</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">Z</span>
+          <div class="track">
+            <div class="connector" style="left:2.28%; width:4.76%"></div>
+            <div class="dot dot--ref" style="left:7.04%"
+                 title="Référence : 171 mots (1.2 %)"></div>
+            <div class="dot dot--lully" style="left:2.28%"
+                 title="Corpus Lully : 14 mots (0.4 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.4%</b> <span class="vs">vs</span> 1.2%
+            <span class="delta delta--under">-0.8</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">Œ</span>
+          <div class="track">
+            <div class="connector" style="left:0.16%; width:0.58%"></div>
+            <div class="dot dot--ref" style="left:0.74%"
+                 title="Référence : 18 mots (0.1 %)"></div>
+            <div class="dot dot--lully" style="left:0.16%"
+                 title="Corpus Lully : 1 mots (0.0 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.0%</b> <span class="vs">vs</span> 0.1%
+            <span class="delta delta--under">-0.1</span>
+          </span>
+        </div>
+    </div>
+    <details class="table-toggle">
+      <summary>Voir le tableau</summary>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Lettre</th><th>Lully (n)</th><th>Lully (%)</th><th>Référence (n)</th><th>Référence (%)</th><th>Δ</th></tr></thead>
+          <tbody><tr><td>A</td><td>364</td><td>9.8%</td><td>1225</td><td>8.4%</td><td>+1.5</td></tr><tr><td>B</td><td>236</td><td>6.4%</td><td>756</td><td>5.2%</td><td>+1.2</td></tr><tr><td>C</td><td>533</td><td>14.4%</td><td>1568</td><td>10.7%</td><td>+3.7</td></tr><tr><td>D</td><td>160</td><td>4.3%</td><td>871</td><td>5.9%</td><td>-1.6</td></tr><tr><td>E</td><td>229</td><td>6.2%</td><td>785</td><td>5.4%</td><td>+0.8</td></tr><tr><td>F</td><td>189</td><td>5.1%</td><td>518</td><td>3.5%</td><td>+1.6</td></tr><tr><td>G</td><td>137</td><td>3.7%</td><td>550</td><td>3.8%</td><td>-0.1</td></tr><tr><td>H</td><td>76</td><td>2.1%</td><td>555</td><td>3.8%</td><td>-1.7</td></tr><tr><td>I</td><td>87</td><td>2.4%</td><td>690</td><td>4.7%</td><td>-2.4</td></tr><tr><td>J</td><td>49</td><td>1.3%</td><td>99</td><td>0.7%</td><td>+0.6</td></tr><tr><td>K</td><td>16</td><td>0.4%</td><td>57</td><td>0.4%</td><td>+0.0</td></tr><tr><td>L</td><td>124</td><td>3.4%</td><td>420</td><td>2.9%</td><td>+0.5</td></tr><tr><td>M</td><td>240</td><td>6.5%</td><td>1040</td><td>7.1%</td><td>-0.6</td></tr><tr><td>N</td><td>83</td><td>2.2%</td><td>295</td><td>2.0%</td><td>+0.2</td></tr><tr><td>O</td><td>64</td><td>1.7%</td><td>385</td><td>2.6%</td><td>-0.9</td></tr><tr><td>P</td><td>367</td><td>9.9%</td><td>1509</td><td>10.3%</td><td>-0.4</td></tr><tr><td>Q</td><td>17</td><td>0.5%</td><td>62</td><td>0.4%</td><td>+0.0</td></tr><tr><td>R</td><td>180</td><td>4.9%</td><td>700</td><td>4.8%</td><td>+0.1</td></tr><tr><td>S</td><td>211</td><td>5.7%</td><td>1094</td><td>7.5%</td><td>-1.8</td></tr><tr><td>T</td><td>168</td><td>4.5%</td><td>752</td><td>5.1%</td><td>-0.6</td></tr><tr><td>U</td><td>15</td><td>0.4%</td><td>71</td><td>0.5%</td><td>-0.1</td></tr><tr><td>V</td><td>122</td><td>3.3%</td><td>358</td><td>2.4%</td><td>+0.9</td></tr><tr><td>W</td><td>7</td><td>0.2%</td><td>19</td><td>0.1%</td><td>+0.1</td></tr><tr><td>X</td><td>6</td><td>0.2%</td><td>52</td><td>0.4%</td><td>-0.2</td></tr><tr><td>Y</td><td>5</td><td>0.1%</td><td>33</td><td>0.2%</td><td>-0.1</td></tr><tr><td>Z</td><td>14</td><td>0.4%</td><td>171</td><td>1.2%</td><td>-0.8</td></tr><tr><td>Œ</td><td>1</td><td>0.0%</td><td>18</td><td>0.1%</td><td>-0.1</td></tr></tbody>
+        </table>
+      </div>
+    </details>
+  </section>
+  
+  <section class="letter-section" id="adjectifs">
+    <h2 class="section-title">Adjectifs <span class="section-count">3649 vs 12138 (référence)</span></h2>
+    <div class="callouts">
+      <div class="callout"><span class="callout-label">Sur-représentées</span><div class="chips"><span class="chip chip--over">C +4.3</span><span class="chip chip--over">E +1.3</span><span class="chip chip--over">M +1.3</span></div></div>
+      <div class="callout"><span class="callout-label">Sous-représentées</span><div class="chips"><span class="chip chip--under">D -2.2</span><span class="chip chip--under">P -1.3</span><span class="chip chip--under">I -1.3</span></div></div>
+    </div>
+    <div class="legend">
+      <span><span class="swatch swatch--lully"></span> Corpus Lully</span>
+      <span><span class="swatch swatch--ref"></span> Référence (pool Wiktionary, non triée par Lucas)</span>
+    </div>
+    <div class="chart">
+        <div class="letter-row">
+          <span class="letter-label">A</span>
+          <div class="track">
+            <div class="connector" style="left:65.35%; width:5.45%"></div>
+            <div class="dot dot--ref" style="left:70.80%"
+                 title="Référence : 1319 mots (10.9 %)"></div>
+            <div class="dot dot--lully" style="left:65.35%"
+                 title="Corpus Lully : 366 mots (10.0 %)"></div>
+          </div>
+          <span class="value-labels"><b>10.0%</b> <span class="vs">vs</span> 10.9%
+            <span class="delta delta--under">-0.8</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">B</span>
+          <div class="track">
+            <div class="connector" style="left:31.78%; width:2.30%"></div>
+            <div class="dot dot--ref" style="left:34.09%"
+                 title="Référence : 635 mots (5.2 %)"></div>
+            <div class="dot dot--lully" style="left:31.78%"
+                 title="Corpus Lully : 178 mots (4.9 %)"></div>
+          </div>
+          <span class="value-labels"><b>4.9%</b> <span class="vs">vs</span> 5.2%
+            <span class="delta delta--under">-0.4</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">C</span>
+          <div class="track">
+            <div class="connector" style="left:59.15%; width:27.80%"></div>
+            <div class="dot dot--ref" style="left:59.15%"
+                 title="Référence : 1102 mots (9.1 %)"></div>
+            <div class="dot dot--lully" style="left:86.96%"
+                 title="Corpus Lully : 487 mots (13.3 %)"></div>
+          </div>
+          <span class="value-labels"><b>13.3%</b> <span class="vs">vs</span> 9.1%
+            <span class="delta delta--over">+4.3</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">D</span>
+          <div class="track">
+            <div class="connector" style="left:45.71%; width:14.46%"></div>
+            <div class="dot dot--ref" style="left:60.17%"
+                 title="Référence : 1121 mots (9.2 %)"></div>
+            <div class="dot dot--lully" style="left:45.71%"
+                 title="Corpus Lully : 256 mots (7.0 %)"></div>
+          </div>
+          <span class="value-labels"><b>7.0%</b> <span class="vs">vs</span> 9.2%
+            <span class="delta delta--under">-2.2</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">E</span>
+          <div class="track">
+            <div class="connector" style="left:46.59%; width:8.58%"></div>
+            <div class="dot dot--ref" style="left:46.59%"
+                 title="Référence : 868 mots (7.2 %)"></div>
+            <div class="dot dot--lully" style="left:55.17%"
+                 title="Corpus Lully : 309 mots (8.5 %)"></div>
+          </div>
+          <span class="value-labels"><b>8.5%</b> <span class="vs">vs</span> 7.2%
+            <span class="delta delta--over">+1.3</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">F</span>
+          <div class="track">
+            <div class="connector" style="left:23.08%; width:7.45%"></div>
+            <div class="dot dot--ref" style="left:23.08%"
+                 title="Référence : 430 mots (3.5 %)"></div>
+            <div class="dot dot--lully" style="left:30.53%"
+                 title="Corpus Lully : 171 mots (4.7 %)"></div>
+          </div>
+          <span class="value-labels"><b>4.7%</b> <span class="vs">vs</span> 3.5%
+            <span class="delta delta--over">+1.1</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">G</span>
+          <div class="track">
+            <div class="connector" style="left:18.75%; width:0.74%"></div>
+            <div class="dot dot--ref" style="left:19.49%"
+                 title="Référence : 363 mots (3.0 %)"></div>
+            <div class="dot dot--lully" style="left:18.75%"
+                 title="Corpus Lully : 105 mots (2.9 %)"></div>
+          </div>
+          <span class="value-labels"><b>2.9%</b> <span class="vs">vs</span> 3.0%
+            <span class="delta delta--under">-0.1</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">H</span>
+          <div class="track">
+            <div class="connector" style="left:13.57%; width:0.98%"></div>
+            <div class="dot dot--ref" style="left:14.55%"
+                 title="Référence : 271 mots (2.2 %)"></div>
+            <div class="dot dot--lully" style="left:13.57%"
+                 title="Corpus Lully : 76 mots (2.1 %)"></div>
+          </div>
+          <span class="value-labels"><b>2.1%</b> <span class="vs">vs</span> 2.2%
+            <span class="delta delta--under">-0.1</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">I</span>
+          <div class="track">
+            <div class="connector" style="left:25.71%; width:8.21%"></div>
+            <div class="dot dot--ref" style="left:33.92%"
+                 title="Référence : 632 mots (5.2 %)"></div>
+            <div class="dot dot--lully" style="left:25.71%"
+                 title="Corpus Lully : 144 mots (3.9 %)"></div>
+          </div>
+          <span class="value-labels"><b>3.9%</b> <span class="vs">vs</span> 5.2%
+            <span class="delta delta--under">-1.3</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">J</span>
+          <div class="track">
+            <div class="connector" style="left:4.83%; width:1.78%"></div>
+            <div class="dot dot--ref" style="left:4.83%"
+                 title="Référence : 90 mots (0.7 %)"></div>
+            <div class="dot dot--lully" style="left:6.61%"
+                 title="Corpus Lully : 37 mots (1.0 %)"></div>
+          </div>
+          <span class="value-labels"><b>1.0%</b> <span class="vs">vs</span> 0.7%
+            <span class="delta delta--over">+0.3</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">K</span>
+          <div class="track">
+            <div class="connector" style="left:0.89%; width:2.11%"></div>
+            <div class="dot dot--ref" style="left:3.01%"
+                 title="Référence : 56 mots (0.5 %)"></div>
+            <div class="dot dot--lully" style="left:0.89%"
+                 title="Corpus Lully : 5 mots (0.1 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.1%</b> <span class="vs">vs</span> 0.5%
+            <span class="delta delta--under">-0.3</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">L</span>
+          <div class="track">
+            <div class="connector" style="left:15.18%; width:0.39%"></div>
+            <div class="dot dot--ref" style="left:15.57%"
+                 title="Référence : 290 mots (2.4 %)"></div>
+            <div class="dot dot--lully" style="left:15.18%"
+                 title="Corpus Lully : 85 mots (2.3 %)"></div>
+          </div>
+          <span class="value-labels"><b>2.3%</b> <span class="vs">vs</span> 2.4%
+            <span class="delta delta--under">-0.1</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">M</span>
+          <div class="track">
+            <div class="connector" style="left:33.50%; width:8.29%"></div>
+            <div class="dot dot--ref" style="left:33.50%"
+                 title="Référence : 624 mots (5.1 %)"></div>
+            <div class="dot dot--lully" style="left:41.78%"
+                 title="Corpus Lully : 234 mots (6.4 %)"></div>
+          </div>
+          <span class="value-labels"><b>6.4%</b> <span class="vs">vs</span> 5.1%
+            <span class="delta delta--over">+1.3</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">N</span>
+          <div class="track">
+            <div class="connector" style="left:12.13%; width:0.90%"></div>
+            <div class="dot dot--ref" style="left:12.13%"
+                 title="Référence : 226 mots (1.9 %)"></div>
+            <div class="dot dot--lully" style="left:13.03%"
+                 title="Corpus Lully : 73 mots (2.0 %)"></div>
+          </div>
+          <span class="value-labels"><b>2.0%</b> <span class="vs">vs</span> 1.9%
+            <span class="delta delta--over">+0.1</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">O</span>
+          <div class="track">
+            <div class="connector" style="left:11.25%; width:0.77%"></div>
+            <div class="dot dot--ref" style="left:12.02%"
+                 title="Référence : 224 mots (1.8 %)"></div>
+            <div class="dot dot--lully" style="left:11.25%"
+                 title="Corpus Lully : 63 mots (1.7 %)"></div>
+          </div>
+          <span class="value-labels"><b>1.7%</b> <span class="vs">vs</span> 1.8%
+            <span class="delta delta--under">-0.1</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">P</span>
+          <div class="track">
+            <div class="connector" style="left:48.21%; width:8.58%"></div>
+            <div class="dot dot--ref" style="left:56.79%"
+                 title="Référence : 1058 mots (8.7 %)"></div>
+            <div class="dot dot--lully" style="left:48.21%"
+                 title="Corpus Lully : 270 mots (7.4 %)"></div>
+          </div>
+          <span class="value-labels"><b>7.4%</b> <span class="vs">vs</span> 8.7%
+            <span class="delta delta--under">-1.3</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">Q</span>
+          <div class="track">
+            <div class="connector" style="left:2.15%; width:0.35%"></div>
+            <div class="dot dot--ref" style="left:2.15%"
+                 title="Référence : 40 mots (0.3 %)"></div>
+            <div class="dot dot--lully" style="left:2.50%"
+                 title="Corpus Lully : 14 mots (0.4 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.4%</b> <span class="vs">vs</span> 0.3%
+            <span class="delta delta--over">+0.1</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">R</span>
+          <div class="track">
+            <div class="connector" style="left:44.82%; width:2.47%"></div>
+            <div class="dot dot--ref" style="left:47.29%"
+                 title="Référence : 881 mots (7.3 %)"></div>
+            <div class="dot dot--lully" style="left:44.82%"
+                 title="Corpus Lully : 251 mots (6.9 %)"></div>
+          </div>
+          <span class="value-labels"><b>6.9%</b> <span class="vs">vs</span> 7.3%
+            <span class="delta delta--under">-0.4</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">S</span>
+          <div class="track">
+            <div class="connector" style="left:41.42%; width:5.17%"></div>
+            <div class="dot dot--ref" style="left:46.59%"
+                 title="Référence : 868 mots (7.2 %)"></div>
+            <div class="dot dot--lully" style="left:41.42%"
+                 title="Corpus Lully : 232 mots (6.4 %)"></div>
+          </div>
+          <span class="value-labels"><b>6.4%</b> <span class="vs">vs</span> 7.2%
+            <span class="delta delta--under">-0.8</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">T</span>
+          <div class="track">
+            <div class="connector" style="left:24.64%; width:6.22%"></div>
+            <div class="dot dot--ref" style="left:30.87%"
+                 title="Référence : 575 mots (4.7 %)"></div>
+            <div class="dot dot--lully" style="left:24.64%"
+                 title="Corpus Lully : 138 mots (3.8 %)"></div>
+          </div>
+          <span class="value-labels"><b>3.8%</b> <span class="vs">vs</span> 4.7%
+            <span class="delta delta--under">-1.0</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">U</span>
+          <div class="track">
+            <div class="connector" style="left:4.08%; width:0.38%"></div>
+            <div class="dot dot--ref" style="left:4.08%"
+                 title="Référence : 76 mots (0.6 %)"></div>
+            <div class="dot dot--lully" style="left:4.46%"
+                 title="Corpus Lully : 25 mots (0.7 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.7%</b> <span class="vs">vs</span> 0.6%
+            <span class="delta delta--over">+0.1</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">V</span>
+          <div class="track">
+            <div class="connector" style="left:13.53%; width:7.54%"></div>
+            <div class="dot dot--ref" style="left:13.53%"
+                 title="Référence : 252 mots (2.1 %)"></div>
+            <div class="dot dot--lully" style="left:21.07%"
+                 title="Corpus Lully : 118 mots (3.2 %)"></div>
+          </div>
+          <span class="value-labels"><b>3.2%</b> <span class="vs">vs</span> 2.1%
+            <span class="delta delta--over">+1.2</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">W</span>
+          <div class="track">
+            <div class="connector" style="left:0.00%; width:1.13%"></div>
+            <div class="dot dot--ref" style="left:1.13%"
+                 title="Référence : 21 mots (0.2 %)"></div>
+            <div class="dot dot--lully" style="left:0.00%"
+                 title="Corpus Lully : 0 mots (0.0 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.0%</b> <span class="vs">vs</span> 0.2%
+            <span class="delta delta--under">-0.2</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">X</span>
+          <div class="track">
+            <div class="connector" style="left:0.16%; width:0.02%"></div>
+            <div class="dot dot--ref" style="left:0.16%"
+                 title="Référence : 3 mots (0.0 %)"></div>
+            <div class="dot dot--lully" style="left:0.18%"
+                 title="Corpus Lully : 1 mots (0.0 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.0%</b> <span class="vs">vs</span> 0.0%
+            <span class="delta delta--over">+0.0</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">Y</span>
+          <div class="track">
+            <div class="connector" style="left:0.00%; width:0.70%"></div>
+            <div class="dot dot--ref" style="left:0.70%"
+                 title="Référence : 13 mots (0.1 %)"></div>
+            <div class="dot dot--lully" style="left:0.00%"
+                 title="Corpus Lully : 0 mots (0.0 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.0%</b> <span class="vs">vs</span> 0.1%
+            <span class="delta delta--under">-0.1</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">Z</span>
+          <div class="track">
+            <div class="connector" style="left:1.79%; width:3.10%"></div>
+            <div class="dot dot--ref" style="left:4.88%"
+                 title="Référence : 91 mots (0.7 %)"></div>
+            <div class="dot dot--lully" style="left:1.79%"
+                 title="Corpus Lully : 10 mots (0.3 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.3%</b> <span class="vs">vs</span> 0.7%
+            <span class="delta delta--under">-0.5</span>
+          </span>
+        </div>
+        <div class="letter-row">
+          <span class="letter-label">Œ</span>
+          <div class="track">
+            <div class="connector" style="left:0.18%; width:0.30%"></div>
+            <div class="dot dot--ref" style="left:0.48%"
+                 title="Référence : 9 mots (0.1 %)"></div>
+            <div class="dot dot--lully" style="left:0.18%"
+                 title="Corpus Lully : 1 mots (0.0 %)"></div>
+          </div>
+          <span class="value-labels"><b>0.0%</b> <span class="vs">vs</span> 0.1%
+            <span class="delta delta--under">-0.0</span>
+          </span>
+        </div>
+    </div>
+    <details class="table-toggle">
+      <summary>Voir le tableau</summary>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Lettre</th><th>Lully (n)</th><th>Lully (%)</th><th>Référence (n)</th><th>Référence (%)</th><th>Δ</th></tr></thead>
+          <tbody><tr><td>A</td><td>366</td><td>10.0%</td><td>1319</td><td>10.9%</td><td>-0.8</td></tr><tr><td>B</td><td>178</td><td>4.9%</td><td>635</td><td>5.2%</td><td>-0.4</td></tr><tr><td>C</td><td>487</td><td>13.3%</td><td>1102</td><td>9.1%</td><td>+4.3</td></tr><tr><td>D</td><td>256</td><td>7.0%</td><td>1121</td><td>9.2%</td><td>-2.2</td></tr><tr><td>E</td><td>309</td><td>8.5%</td><td>868</td><td>7.2%</td><td>+1.3</td></tr><tr><td>F</td><td>171</td><td>4.7%</td><td>430</td><td>3.5%</td><td>+1.1</td></tr><tr><td>G</td><td>105</td><td>2.9%</td><td>363</td><td>3.0%</td><td>-0.1</td></tr><tr><td>H</td><td>76</td><td>2.1%</td><td>271</td><td>2.2%</td><td>-0.1</td></tr><tr><td>I</td><td>144</td><td>3.9%</td><td>632</td><td>5.2%</td><td>-1.3</td></tr><tr><td>J</td><td>37</td><td>1.0%</td><td>90</td><td>0.7%</td><td>+0.3</td></tr><tr><td>K</td><td>5</td><td>0.1%</td><td>56</td><td>0.5%</td><td>-0.3</td></tr><tr><td>L</td><td>85</td><td>2.3%</td><td>290</td><td>2.4%</td><td>-0.1</td></tr><tr><td>M</td><td>234</td><td>6.4%</td><td>624</td><td>5.1%</td><td>+1.3</td></tr><tr><td>N</td><td>73</td><td>2.0%</td><td>226</td><td>1.9%</td><td>+0.1</td></tr><tr><td>O</td><td>63</td><td>1.7%</td><td>224</td><td>1.8%</td><td>-0.1</td></tr><tr><td>P</td><td>270</td><td>7.4%</td><td>1058</td><td>8.7%</td><td>-1.3</td></tr><tr><td>Q</td><td>14</td><td>0.4%</td><td>40</td><td>0.3%</td><td>+0.1</td></tr><tr><td>R</td><td>251</td><td>6.9%</td><td>881</td><td>7.3%</td><td>-0.4</td></tr><tr><td>S</td><td>232</td><td>6.4%</td><td>868</td><td>7.2%</td><td>-0.8</td></tr><tr><td>T</td><td>138</td><td>3.8%</td><td>575</td><td>4.7%</td><td>-1.0</td></tr><tr><td>U</td><td>25</td><td>0.7%</td><td>76</td><td>0.6%</td><td>+0.1</td></tr><tr><td>V</td><td>118</td><td>3.2%</td><td>252</td><td>2.1%</td><td>+1.2</td></tr><tr><td>W</td><td>0</td><td>0.0%</td><td>21</td><td>0.2%</td><td>-0.2</td></tr><tr><td>X</td><td>1</td><td>0.0%</td><td>3</td><td>0.0%</td><td>+0.0</td></tr><tr><td>Y</td><td>0</td><td>0.0%</td><td>13</td><td>0.1%</td><td>-0.1</td></tr><tr><td>Z</td><td>10</td><td>0.3%</td><td>91</td><td>0.7%</td><td>-0.5</td></tr><tr><td>Œ</td><td>1</td><td>0.0%</td><td>9</td><td>0.1%</td><td>-0.0</td></tr></tbody>
+        </table>
+      </div>
+    </details>
+  </section>
+  <footer class="legend-note">
+    <p>Voir aussi le <a href="index.html">rapport de champs lexicaux</a> et les
+    <a href="candidates.html">mots candidats</a>. Régénéré à chaque commit qui touche
+    <code>lully/words.py</code>.</p>
+  </footer>
+</main>

@@ -15,7 +15,6 @@ import ast
 import json
 import os
 import html as html_lib
-from datetime import datetime, timezone
 
 
 # (field name, "N" nom / "A" adjectif / "N+A" les deux, mots-témoins, note optionnelle)
@@ -300,14 +299,14 @@ def build_html(nouns, adjectives, source_label=""):
       </div>
     </section>"""
 
-    generated_line = f"généré {source_label}" if source_label else ""
+    generated_line = f"<p>généré {esc(source_label)}</p>" if source_label else ""
 
     return TEMPLATE.format(
         n_nouns=len(nouns), n_adj=len(adjectives),
         n_fields=len(results),
         priority_html=priority_html,
         sections_html=sections_html,
-        generated_line=esc(generated_line),
+        generated_line=generated_line,
     )
 
 
@@ -531,8 +530,9 @@ TEMPLATE = """<title>Lully — champs lexicaux à compléter</title>
     choisis. Les tiers (bien / partiellement / peu couverts) sont recalculés à chaque
     génération, à partir de l'état courant du corpus. Envie de piocher plus large que ces
     33 champs ? Voir les <a href="candidates.html">mots candidats</a> (14&nbsp;000+ noms,
-    12&nbsp;000+ adjectifs, tirés du Wiktionnaire).</p>
-    <p>{generated_line}</p>
+    12&nbsp;000+ adjectifs, tirés du Wiktionnaire), ou la <a href="letters.html">distribution
+    par lettre</a> pour repérer un biais plutôt qu'un thème.</p>
+    {generated_line}
   </footer>
 </main>
 
@@ -573,10 +573,12 @@ def main():
 
     nouns, adjectives = load_words(args.words)
 
+    # Only stamp a "generated" line in CI (GITHUB_SHA set). Local runs leave it
+    # blank so re-running this script produces byte-identical output given the
+    # same corpus - a wall-clock timestamp here would make every local
+    # regeneration a spurious diff against whatever CI last committed.
     commit = os.environ.get("GITHUB_SHA", "")[:7]
-    source_label = f"automatiquement (commit {commit})" if commit else (
-        f"le {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}"
-    )
+    source_label = f"automatiquement (commit {commit})" if commit else ""
     html_out = build_html(nouns, adjectives, source_label)
 
     out_dir = os.path.dirname(args.out)

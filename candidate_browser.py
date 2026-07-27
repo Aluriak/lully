@@ -228,7 +228,8 @@ TEMPLATE = """<title>Lully — mots candidats</title>
   <footer class="legend">
     <p>Régénéré à chaque commit qui touche <code>lully/words.py</code> ou
     <code>candidate_words.json</code>. Voir aussi le
-    <a href="index.html">rapport de champs lexicaux</a> pour une recherche plus ciblée par thème.</p>
+    <a href="index.html">rapport de champs lexicaux</a> pour une recherche plus ciblée par thème,
+    ou la <a href="letters.html">distribution par lettre</a>.</p>
   </footer>
 </main>
 
