@@ -1,0 +1,40 @@
+name: Lexical field report
+
+# Regenerates docs/index.html (which fields of lully/words.py still need
+# words, per lexical_report.py) whenever the corpus or the report script
+# changes on main, and commits the result back.
+#
+# One-time setup: in the repo's Settings > Pages, set "Source" to
+# "Deploy from a branch", branch "main", folder "/docs".
+
+"on":
+  push:
+    branches: [main]
+    paths:
+      - "lully/words.py"
+      - "lexical_report.py"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Generate report
+        run: python lexical_report.py --words lully/words.py --out docs/index.html
+
+      - name: Commit report if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/index.html
+          git diff --cached --quiet || git commit -m "docs: regenerate lexical field report"
+          git push
