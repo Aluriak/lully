@@ -197,19 +197,19 @@
       dans <code>addwords.py</code>. Ce rapport se régénère à chaque commit qui touche le corpus.
     </p>
     <div class="stats">
-      <div class="stat"><span class="n">3626</span><span class="l">noms</span></div>
-      <div class="stat"><span class="n">3615</span><span class="l">adjectifs</span></div>
+      <div class="stat"><span class="n">3651</span><span class="l">noms</span></div>
+      <div class="stat"><span class="n">3625</span><span class="l">adjectifs</span></div>
       <div class="stat"><span class="n">33</span><span class="l">champs suivis</span></div>
     </div>
     <div class="priority">
       <h2>Par où commencer</h2>
-      <ol><li><a href="#numérique-grand-public--ia--réseaux--smartphone">Numérique grand public (IA, réseaux, smartphone)</a> <span class="prio-pct">19&nbsp;%</span></li><li><a href="#médecine--maux-du-corps">Médecine, maux du corps</a> <span class="prio-pct">40&nbsp;%</span></li><li><a href="#couleurs-nommées">Couleurs nommées</a> <span class="prio-pct">47&nbsp;%</span></li><li><a href="#religion---liturgie">Religion &amp; liturgie</a> <span class="prio-pct">48&nbsp;%</span></li><li><a href="#parenté-proche">Parenté proche</a> <span class="prio-pct">53&nbsp;%</span></li><li><a href="#écologie---environnement">Écologie &amp; environnement</a> <span class="prio-pct">58&nbsp;%</span></li><li><a href="#droit--justice--politique">Droit, justice, politique</a> <span class="prio-pct">60&nbsp;%</span></li><li><a href="#vocabulaire-logiciel---dev">Vocabulaire logiciel / dev</a> <span class="prio-pct">63&nbsp;%</span></li></ol>
+      <ol><li><a href="#numérique-grand-public--ia--réseaux--smartphone">Numérique grand public (IA, réseaux, smartphone)</a> <span class="prio-pct">31&nbsp;%</span></li><li><a href="#médecine--maux-du-corps">Médecine, maux du corps</a> <span class="prio-pct">53&nbsp;%</span></li><li><a href="#parenté-proche">Parenté proche</a> <span class="prio-pct">53&nbsp;%</span></li><li><a href="#religion---liturgie">Religion &amp; liturgie</a> <span class="prio-pct">57&nbsp;%</span></li><li><a href="#écologie---environnement">Écologie &amp; environnement</a> <span class="prio-pct">58&nbsp;%</span></li><li><a href="#droit--justice--politique">Droit, justice, politique</a> <span class="prio-pct">60&nbsp;%</span></li><li><a href="#couleurs-nommées">Couleurs nommées</a> <span class="prio-pct">68&nbsp;%</span></li><li><a href="#espace--astronomie-concrète">Espace, astronomie concrète</a> <span class="prio-pct">70&nbsp;%</span></li></ol>
     </div>
   </header>
 
   <div class="tree">
     <section class="tier tier--bien">
-      <h2 class="tier-node">Bien couverts <span class="count">24 champs</span></h2>
+      <h2 class="tier-node">Bien couverts <span class="count">26 champs</span></h2>
       <div class="cards">
         <article class="card" id="espace--astronomie-concrète">
           <div class="card-head">
@@ -347,6 +347,23 @@
           <div class="present-row"><span class="present-label">déjà présents (12/14)</span><div class="chips"><span class="chip chip--present">Banque</span><span class="chip chip--present">Bourse</span><span class="chip chip--present">Capitalisation</span><span class="chip chip--present">Liquidité</span><span class="chip chip--present">Dette</span><span class="chip chip--present">Monnaie</span><span class="chip chip--present">Fortune</span><span class="chip chip--present">Prospérité</span><span class="chip chip--present">Inflation</span><span class="chip chip--present">Récession</span><span class="chip chip--present">Spéculation</span><span class="chip chip--present">Économie</span></div></div>
           
         </article>
+        <article class="card" id="anatomie--corps-humain">
+          <div class="card-head">
+            <h3>Anatomie, corps humain</h3>
+            <span class="tag">noms</span>
+          </div>
+          <div class="gauge" style="--pct:87%">
+            <div class="gauge-fill"></div>
+            <span class="gauge-label">87 %</span>
+          </div>
+          <div class="missing-row">
+            <span class="missing-label">à chercher (2 pistes)</span>
+            <div class="chips reveal-chips"></div>
+            <button type="button" class="reveal-btn" data-pool="[&quot;Aisselle&quot;, &quot;Omoplate&quot;]">🔍 Révéler un indice (2 restants)</button>
+          </div>
+          <div class="present-row"><span class="present-label">déjà présents (13/15)</span><div class="chips"><span class="chip chip--present">Clavicule</span><span class="chip chip--present">Mâchoire</span><span class="chip chip--present">Nuque</span><span class="chip chip--present">Cheville</span><span class="chip chip--present">Paupière</span><span class="chip chip--present">Narine</span><span class="chip chip--present">Cuisse</span><span class="chip chip--present">Hanche</span><span class="chip chip--present">Gencive</span><span class="chip chip--present">Rotule</span><span class="chip chip--present">Rétine</span><span class="chip chip--present">Phalange</span><span class="chip chip--present">Vertèbre</span></div></div>
+          <p class="note">le noyau (visage, membres) est souvent là ; les organes internes, moins</p>
+        </article>
         <article class="card" id="saveurs">
           <div class="card-head">
             <h3>Saveurs</h3>
@@ -364,72 +381,37 @@
           <div class="present-row"><span class="present-label">déjà présents (7/8)</span><div class="chips"><span class="chip chip--present">Sucrée</span><span class="chip chip--present">Salée</span><span class="chip chip--present">Amère</span><span class="chip chip--present">Acide</span><span class="chip chip--present">Épicée</span><span class="chip chip--present">Fade</span><span class="chip chip--present">Savoureuse</span></div></div>
           
         </article>
+        <article class="card" id="vocabulaire-logiciel---dev">
+          <div class="card-head">
+            <h3>Vocabulaire logiciel / dev</h3>
+            <span class="tag">noms</span>
+          </div>
+          <div class="gauge" style="--pct:95%">
+            <div class="gauge-fill"></div>
+            <span class="gauge-label">95 %</span>
+          </div>
+          <div class="missing-row">
+            <span class="missing-label">à chercher (1 piste)</span>
+            <div class="chips reveal-chips"></div>
+            <button type="button" class="reveal-btn" data-pool="[&quot;Algorithme&quot;]">🔍 Révéler un indice (1 restant)</button>
+          </div>
+          <div class="present-row"><span class="present-label">déjà présents (18/19)</span><div class="chips"><span class="chip chip--present">Application</span><span class="chip chip--present">Numérisation</span><span class="chip chip--present">Robotique</span><span class="chip chip--present">Informatique</span><span class="chip chip--present">Connexion</span><span class="chip chip--present">Interface</span><span class="chip chip--present">Plateforme</span><span class="chip chip--present">Cybersécurité</span><span class="chip chip--present">Intelligence</span><span class="chip chip--present">Base</span><span class="chip chip--present">Donnée</span><span class="chip chip--present">Messagerie</span><span class="chip chip--present">Notification</span><span class="chip chip--present">Synchronisation</span><span class="chip chip--present">Virtualisation</span><span class="chip chip--present">Modélisation</span><span class="chip chip--present">Instanciation</span><span class="chip chip--present">Journalisation</span></div></div>
+          <p class="note">un clin d&#x27;œil facile pour qui code : ce champ parlera à Lucas plus qu&#x27;au grand public</p>
+        </article>
         <article class="card" id="sciences-savantes-en--logie----graphie">
           <div class="card-head">
             <h3>Sciences savantes en -logie / -graphie</h3>
             <span class="tag">noms</span>
           </div>
-          <div class="gauge" style="--pct:90%">
+          <div class="gauge" style="--pct:100%">
             <div class="gauge-fill"></div>
-            <span class="gauge-label">90 %</span>
+            <span class="gauge-label">100 %</span>
           </div>
           <div class="missing-row">
-            <span class="missing-label">à chercher (2 pistes)</span>
-            <div class="chips reveal-chips"></div>
-            <button type="button" class="reveal-btn" data-pool="[&quot;Météorologie&quot;, &quot;Cartographie&quot;]">🔍 Révéler un indice (2 restants)</button>
+            <span class="missing-label">à chercher</span>
+            <div class="chips"><span class="chip chip--done">rien ne manque !</span></div>
           </div>
-          <div class="present-row"><span class="present-label">déjà présents (19/21)</span><div class="chips"><span class="chip chip--present">Biologie</span><span class="chip chip--present">Astronomie</span><span class="chip chip--present">Anthropologie</span><span class="chip chip--present">Cristallographie</span><span class="chip chip--present">Démographie</span><span class="chip chip--present">Géologie</span><span class="chip chip--present">Sociologie</span><span class="chip chip--present">Psychologie</span><span class="chip chip--present">Chronologie</span><span class="chip chip--present">Bibliographie</span><span class="chip chip--present">Numismatique</span><span class="chip chip--present">Botanique</span><span class="chip chip--present">Zoologie</span><span class="chip chip--present">Criminologie</span><span class="chip chip--present">Climatologie</span><span class="chip chip--present">Ethnologie</span><span class="chip chip--present">Phonologie</span><span class="chip chip--present">Morphologie</span><span class="chip chip--present">Physiologie</span></div></div>
-          
-        </article>
-        <article class="card" id="textures---matières">
-          <div class="card-head">
-            <h3>Textures &amp; matières</h3>
-            <span class="tag">adjectifs</span>
-          </div>
-          <div class="gauge" style="--pct:90%">
-            <div class="gauge-fill"></div>
-            <span class="gauge-label">90 %</span>
-          </div>
-          <div class="missing-row">
-            <span class="missing-label">à chercher (1 piste)</span>
-            <div class="chips reveal-chips"></div>
-            <button type="button" class="reveal-btn" data-pool="[&quot;Cotonneuse&quot;]">🔍 Révéler un indice (1 restant)</button>
-          </div>
-          <div class="present-row"><span class="present-label">déjà présents (9/10)</span><div class="chips"><span class="chip chip--present">Rugueuse</span><span class="chip chip--present">Lisse</span><span class="chip chip--present">Soyeuse</span><span class="chip chip--present">Visqueuse</span><span class="chip chip--present">Granuleuse</span><span class="chip chip--present">Poreuse</span><span class="chip chip--present">Élastique</span><span class="chip chip--present">Collante</span><span class="chip chip--present">Huileuse</span></div></div>
-          
-        </article>
-        <article class="card" id="relief---paysages-d-eau">
-          <div class="card-head">
-            <h3>Relief &amp; paysages d&#x27;eau</h3>
-            <span class="tag">noms</span>
-          </div>
-          <div class="gauge" style="--pct:91%">
-            <div class="gauge-fill"></div>
-            <span class="gauge-label">91 %</span>
-          </div>
-          <div class="missing-row">
-            <span class="missing-label">à chercher (1 piste)</span>
-            <div class="chips reveal-chips"></div>
-            <button type="button" class="reveal-btn" data-pool="[&quot;Presqu&#x27;Île&quot;]">🔍 Révéler un indice (1 restant)</button>
-          </div>
-          <div class="present-row"><span class="present-label">déjà présents (10/11)</span><div class="chips"><span class="chip chip--present">Montagne</span><span class="chip chip--present">Vallée</span><span class="chip chip--present">Rivière</span><span class="chip chip--present">Falaise</span><span class="chip chip--present">Colline</span><span class="chip chip--present">Plaine</span><span class="chip chip--present">Péninsule</span><span class="chip chip--present">Crique</span><span class="chip chip--present">Lagune</span><span class="chip chip--present">Cascade</span></div></div>
-          
-        </article>
-        <article class="card" id="musique--danse--instruments">
-          <div class="card-head">
-            <h3>Musique, danse, instruments</h3>
-            <span class="tag">noms</span>
-          </div>
-          <div class="gauge" style="--pct:92%">
-            <div class="gauge-fill"></div>
-            <span class="gauge-label">92 %</span>
-          </div>
-          <div class="missing-row">
-            <span class="missing-label">à chercher (1 piste)</span>
-            <div class="chips reveal-chips"></div>
-            <button type="button" class="reveal-btn" data-pool="[&quot;Mandoline&quot;]">🔍 Révéler un indice (1 restant)</button>
-          </div>
-          <div class="present-row"><span class="present-label">déjà présents (11/12)</span><div class="chips"><span class="chip chip--present">Guitare</span><span class="chip chip--present">Cornemuse</span><span class="chip chip--present">Harpe</span><span class="chip chip--present">Clarinette</span><span class="chip chip--present">Chorale</span><span class="chip chip--present">Gigue</span><span class="chip chip--present">Cymbale</span><span class="chip chip--present">Flûte</span><span class="chip chip--present">Sarabande</span><span class="chip chip--present">Tarentelle</span><span class="chip chip--present">Polka</span></div></div>
+          <div class="present-row"><span class="present-label">déjà présents (21/21)</span><div class="chips"><span class="chip chip--present">Biologie</span><span class="chip chip--present">Astronomie</span><span class="chip chip--present">Anthropologie</span><span class="chip chip--present">Cristallographie</span><span class="chip chip--present">Démographie</span><span class="chip chip--present">Géologie</span><span class="chip chip--present">Sociologie</span><span class="chip chip--present">Psychologie</span><span class="chip chip--present">Chronologie</span><span class="chip chip--present">Météorologie</span><span class="chip chip--present">Cartographie</span><span class="chip chip--present">Bibliographie</span><span class="chip chip--present">Numismatique</span><span class="chip chip--present">Botanique</span><span class="chip chip--present">Zoologie</span><span class="chip chip--present">Criminologie</span><span class="chip chip--present">Climatologie</span><span class="chip chip--present">Ethnologie</span><span class="chip chip--present">Phonologie</span><span class="chip chip--present">Morphologie</span><span class="chip chip--present">Physiologie</span></div></div>
           
         </article>
         <article class="card" id="métiers---professions-féminisées">
@@ -544,6 +526,22 @@
           <div class="present-row"><span class="present-label">déjà présents (12/12)</span><div class="chips"><span class="chip chip--present">Pince</span><span class="chip chip--present">Fourchette</span><span class="chip chip--present">Cuillère</span><span class="chip chip--present">Casserole</span><span class="chip chip--present">Bouilloire</span><span class="chip chip--present">Aiguille</span><span class="chip chip--present">Épingle</span><span class="chip chip--present">Brosse</span><span class="chip chip--present">Éponge</span><span class="chip chip--present">Bassine</span><span class="chip chip--present">Louche</span><span class="chip chip--present">Lime</span></div></div>
           
         </article>
+        <article class="card" id="musique--danse--instruments">
+          <div class="card-head">
+            <h3>Musique, danse, instruments</h3>
+            <span class="tag">noms</span>
+          </div>
+          <div class="gauge" style="--pct:100%">
+            <div class="gauge-fill"></div>
+            <span class="gauge-label">100 %</span>
+          </div>
+          <div class="missing-row">
+            <span class="missing-label">à chercher</span>
+            <div class="chips"><span class="chip chip--done">rien ne manque !</span></div>
+          </div>
+          <div class="present-row"><span class="present-label">déjà présents (12/12)</span><div class="chips"><span class="chip chip--present">Guitare</span><span class="chip chip--present">Cornemuse</span><span class="chip chip--present">Harpe</span><span class="chip chip--present">Clarinette</span><span class="chip chip--present">Chorale</span><span class="chip chip--present">Gigue</span><span class="chip chip--present">Cymbale</span><span class="chip chip--present">Flûte</span><span class="chip chip--present">Mandoline</span><span class="chip chip--present">Sarabande</span><span class="chip chip--present">Tarentelle</span><span class="chip chip--present">Polka</span></div></div>
+          
+        </article>
         <article class="card" id="armement---guerre">
           <div class="card-head">
             <h3>Armement &amp; guerre</h3>
@@ -592,6 +590,38 @@
           <div class="present-row"><span class="present-label">déjà présents (11/11)</span><div class="chips"><span class="chip chip--present">Confiture</span><span class="chip chip--present">Choucroute</span><span class="chip chip--present">Fondue</span><span class="chip chip--present">Marmelade</span><span class="chip chip--present">Charcuterie</span><span class="chip chip--present">Pâtisserie</span><span class="chip chip--present">Brioche</span><span class="chip chip--present">Omelette</span><span class="chip chip--present">Soupe</span><span class="chip chip--present">Compote</span><span class="chip chip--present">Confiserie</span></div></div>
           
         </article>
+        <article class="card" id="relief---paysages-d-eau">
+          <div class="card-head">
+            <h3>Relief &amp; paysages d&#x27;eau</h3>
+            <span class="tag">noms</span>
+          </div>
+          <div class="gauge" style="--pct:100%">
+            <div class="gauge-fill"></div>
+            <span class="gauge-label">100 %</span>
+          </div>
+          <div class="missing-row">
+            <span class="missing-label">à chercher</span>
+            <div class="chips"><span class="chip chip--done">rien ne manque !</span></div>
+          </div>
+          <div class="present-row"><span class="present-label">déjà présents (11/11)</span><div class="chips"><span class="chip chip--present">Montagne</span><span class="chip chip--present">Vallée</span><span class="chip chip--present">Rivière</span><span class="chip chip--present">Falaise</span><span class="chip chip--present">Colline</span><span class="chip chip--present">Plaine</span><span class="chip chip--present">Presqu&#x27;Île</span><span class="chip chip--present">Péninsule</span><span class="chip chip--present">Crique</span><span class="chip chip--present">Lagune</span><span class="chip chip--present">Cascade</span></div></div>
+          
+        </article>
+        <article class="card" id="textures---matières">
+          <div class="card-head">
+            <h3>Textures &amp; matières</h3>
+            <span class="tag">adjectifs</span>
+          </div>
+          <div class="gauge" style="--pct:100%">
+            <div class="gauge-fill"></div>
+            <span class="gauge-label">100 %</span>
+          </div>
+          <div class="missing-row">
+            <span class="missing-label">à chercher</span>
+            <div class="chips"><span class="chip chip--done">rien ne manque !</span></div>
+          </div>
+          <div class="present-row"><span class="present-label">déjà présents (10/10)</span><div class="chips"><span class="chip chip--present">Rugueuse</span><span class="chip chip--present">Lisse</span><span class="chip chip--present">Soyeuse</span><span class="chip chip--present">Visqueuse</span><span class="chip chip--present">Granuleuse</span><span class="chip chip--present">Poreuse</span><span class="chip chip--present">Élastique</span><span class="chip chip--present">Collante</span><span class="chip chip--present">Huileuse</span><span class="chip chip--present">Cotonneuse</span></div></div>
+          
+        </article>
         <article class="card" id="états-émotionnels">
           <div class="card-head">
             <h3>États émotionnels</h3>
@@ -611,58 +641,24 @@
       </div>
     </section>
     <section class="tier tier--partiel">
-      <h2 class="tier-node">Partiellement couverts <span class="count">8 champs</span></h2>
+      <h2 class="tier-node">Partiellement couverts <span class="count">6 champs</span></h2>
       <div class="cards">
         <article class="card" id="médecine--maux-du-corps">
           <div class="card-head">
             <h3>Médecine, maux du corps</h3>
             <span class="tag">noms</span>
           </div>
-          <div class="gauge" style="--pct:40%">
+          <div class="gauge" style="--pct:53%">
             <div class="gauge-fill"></div>
-            <span class="gauge-label">40 %</span>
+            <span class="gauge-label">53 %</span>
           </div>
           <div class="missing-row">
-            <span class="missing-label">à chercher (18 pistes)</span>
+            <span class="missing-label">à chercher (14 pistes)</span>
             <div class="chips reveal-chips"></div>
-            <button type="button" class="reveal-btn" data-pool="[&quot;Bronchite&quot;, &quot;Arthrite&quot;, &quot;Appendicite&quot;, &quot;Névralgie&quot;, &quot;Claustrophobie&quot;, &quot;Agoraphobie&quot;, &quot;Hydrophobie&quot;, &quot;Tuberculose&quot;, &quot;Cirrhose&quot;, &quot;Gastrite&quot;, &quot;Otite&quot;, &quot;Laryngite&quot;, &quot;Conjonctivite&quot;, &quot;Dermatite&quot;, &quot;Hépatite&quot;, &quot;Angine&quot;, &quot;Anémie&quot;, &quot;Toux&quot;]">🔍 Révéler un indice (18 restants)</button>
+            <button type="button" class="reveal-btn" data-pool="[&quot;Arthrite&quot;, &quot;Appendicite&quot;, &quot;Névralgie&quot;, &quot;Claustrophobie&quot;, &quot;Agoraphobie&quot;, &quot;Hydrophobie&quot;, &quot;Tuberculose&quot;, &quot;Cirrhose&quot;, &quot;Otite&quot;, &quot;Laryngite&quot;, &quot;Conjonctivite&quot;, &quot;Dermatite&quot;, &quot;Angine&quot;, &quot;Anémie&quot;]">🔍 Révéler un indice (14 restants)</button>
           </div>
-          <div class="present-row"><span class="present-label">déjà présents (12/30)</span><div class="chips"><span class="chip chip--present">Mycose</span><span class="chip chip--present">Migraine</span><span class="chip chip--present">Anosmie</span><span class="chip chip--present">Agueusie</span><span class="chip chip--present">Allergie</span><span class="chip chip--present">Insomnie</span><span class="chip chip--present">Fracture</span><span class="chip chip--present">Entorse</span><span class="chip chip--present">Cicatrice</span><span class="chip chip--present">Blessure</span><span class="chip chip--present">Fièvre</span><span class="chip chip--present">Nausée</span></div></div>
+          <div class="present-row"><span class="present-label">déjà présents (16/30)</span><div class="chips"><span class="chip chip--present">Bronchite</span><span class="chip chip--present">Mycose</span><span class="chip chip--present">Migraine</span><span class="chip chip--present">Anosmie</span><span class="chip chip--present">Agueusie</span><span class="chip chip--present">Gastrite</span><span class="chip chip--present">Hépatite</span><span class="chip chip--present">Allergie</span><span class="chip chip--present">Insomnie</span><span class="chip chip--present">Fracture</span><span class="chip chip--present">Entorse</span><span class="chip chip--present">Cicatrice</span><span class="chip chip--present">Blessure</span><span class="chip chip--present">Fièvre</span><span class="chip chip--present">Toux</span><span class="chip chip--present">Nausée</span></div></div>
           <p class="note">les symptômes du quotidien passent, le jargon savant en -ite/-ose résiste</p>
-        </article>
-        <article class="card" id="couleurs-nommées">
-          <div class="card-head">
-            <h3>Couleurs nommées</h3>
-            <span class="tag">noms & adjectifs</span>
-          </div>
-          <div class="gauge" style="--pct:47%">
-            <div class="gauge-fill"></div>
-            <span class="gauge-label">47 %</span>
-          </div>
-          <div class="missing-row">
-            <span class="missing-label">à chercher (10 pistes)</span>
-            <div class="chips reveal-chips"></div>
-            <button type="button" class="reveal-btn" data-pool="[&quot;Turquoise&quot;, &quot;Indigo&quot;, &quot;Ocre&quot;, &quot;Ivoire&quot;, &quot;Corail&quot;, &quot;Incarnate&quot;, &quot;Safran&quot;, &quot;Kaki&quot;, &quot;Beige&quot;, &quot;Opaline&quot;]">🔍 Révéler un indice (10 restants)</button>
-          </div>
-          <div class="present-row"><span class="present-label">déjà présents (9/19)</span><div class="chips"><span class="chip chip--present">Rose</span><span class="chip chip--present">Mauve</span><span class="chip chip--present">Pourpre</span><span class="chip chip--present">Vermeille</span><span class="chip chip--present">Écarlate</span><span class="chip chip--present">Cramoisie</span><span class="chip chip--present">Argentée</span><span class="chip chip--present">Dorée</span><span class="chip chip--present">Cuivrée</span></div></div>
-          <p class="note">champ pénalisé par la grammaire : une couleur est un nom masculin par défaut (« le rouge »), or le corpus est presque tout féminin</p>
-        </article>
-        <article class="card" id="religion---liturgie">
-          <div class="card-head">
-            <h3>Religion &amp; liturgie</h3>
-            <span class="tag">noms</span>
-          </div>
-          <div class="gauge" style="--pct:48%">
-            <div class="gauge-fill"></div>
-            <span class="gauge-label">48 %</span>
-          </div>
-          <div class="missing-row">
-            <span class="missing-label">à chercher (12 pistes)</span>
-            <div class="chips reveal-chips"></div>
-            <button type="button" class="reveal-btn" data-pool="[&quot;Absolution&quot;, &quot;Communion&quot;, &quot;Liturgie&quot;, &quot;Confession&quot;, &quot;Messe&quot;, &quot;Procession&quot;, &quot;Dévotion&quot;, &quot;Idolâtrie&quot;, &quot;Canonisation&quot;, &quot;Excommunication&quot;, &quot;Résurrection&quot;, &quot;Transsubstantiation&quot;]">🔍 Révéler un indice (12 restants)</button>
-          </div>
-          <div class="present-row"><span class="present-label">déjà présents (11/23)</span><div class="chips"><span class="chip chip--present">Bénédiction</span><span class="chip chip--present">Providence</span><span class="chip chip--present">Prière</span><span class="chip chip--present">Foi</span><span class="chip chip--present">Grâce</span><span class="chip chip--present">Offrande</span><span class="chip chip--present">Hérésie</span><span class="chip chip--present">Apparition</span><span class="chip chip--present">Ascension</span><span class="chip chip--present">Annonciation</span><span class="chip chip--present">Épiphanie</span></div></div>
-          <p class="note">vocabulaire chrétien surtout ; les autres traditions religieuses sont un angle mort</p>
         </article>
         <article class="card" id="parenté-proche">
           <div class="card-head">
@@ -680,6 +676,23 @@
           </div>
           <div class="present-row"><span class="present-label">déjà présents (9/17)</span><div class="chips"><span class="chip chip--present">Mère</span><span class="chip chip--present">Sœur</span><span class="chip chip--present">Tante</span><span class="chip chip--present">Cousine</span><span class="chip chip--present">Marraine</span><span class="chip chip--present">Aïeule</span><span class="chip chip--present">Bru</span><span class="chip chip--present">Veuve</span><span class="chip chip--present">Concubine</span></div></div>
           <p class="note">le cercle proche est couvert, la parentèle plus éloignée beaucoup moins</p>
+        </article>
+        <article class="card" id="religion---liturgie">
+          <div class="card-head">
+            <h3>Religion &amp; liturgie</h3>
+            <span class="tag">noms</span>
+          </div>
+          <div class="gauge" style="--pct:57%">
+            <div class="gauge-fill"></div>
+            <span class="gauge-label">57 %</span>
+          </div>
+          <div class="missing-row">
+            <span class="missing-label">à chercher (10 pistes)</span>
+            <div class="chips reveal-chips"></div>
+            <button type="button" class="reveal-btn" data-pool="[&quot;Absolution&quot;, &quot;Communion&quot;, &quot;Liturgie&quot;, &quot;Confession&quot;, &quot;Messe&quot;, &quot;Dévotion&quot;, &quot;Idolâtrie&quot;, &quot;Canonisation&quot;, &quot;Excommunication&quot;, &quot;Transsubstantiation&quot;]">🔍 Révéler un indice (10 restants)</button>
+          </div>
+          <div class="present-row"><span class="present-label">déjà présents (13/23)</span><div class="chips"><span class="chip chip--present">Bénédiction</span><span class="chip chip--present">Providence</span><span class="chip chip--present">Prière</span><span class="chip chip--present">Procession</span><span class="chip chip--present">Foi</span><span class="chip chip--present">Grâce</span><span class="chip chip--present">Offrande</span><span class="chip chip--present">Hérésie</span><span class="chip chip--present">Apparition</span><span class="chip chip--present">Résurrection</span><span class="chip chip--present">Ascension</span><span class="chip chip--present">Annonciation</span><span class="chip chip--present">Épiphanie</span></div></div>
+          <p class="note">vocabulaire chrétien surtout ; les autres traditions religieuses sont un angle mort</p>
         </article>
         <article class="card" id="écologie---environnement">
           <div class="card-head">
@@ -715,39 +728,22 @@
           <div class="present-row"><span class="present-label">déjà présents (6/10)</span><div class="chips"><span class="chip chip--present">Constitution</span><span class="chip chip--present">Ordonnance</span><span class="chip chip--present">Citoyenneté</span><span class="chip chip--present">Élection</span><span class="chip chip--present">Démocratie</span><span class="chip chip--present">Monarchie</span></div></div>
           
         </article>
-        <article class="card" id="vocabulaire-logiciel---dev">
+        <article class="card" id="couleurs-nommées">
           <div class="card-head">
-            <h3>Vocabulaire logiciel / dev</h3>
-            <span class="tag">noms</span>
+            <h3>Couleurs nommées</h3>
+            <span class="tag">noms & adjectifs</span>
           </div>
-          <div class="gauge" style="--pct:63%">
+          <div class="gauge" style="--pct:68%">
             <div class="gauge-fill"></div>
-            <span class="gauge-label">63 %</span>
+            <span class="gauge-label">68 %</span>
           </div>
           <div class="missing-row">
-            <span class="missing-label">à chercher (7 pistes)</span>
+            <span class="missing-label">à chercher (6 pistes)</span>
             <div class="chips reveal-chips"></div>
-            <button type="button" class="reveal-btn" data-pool="[&quot;Numérisation&quot;, &quot;Robotique&quot;, &quot;Algorithme&quot;, &quot;Cybersécurité&quot;, &quot;Synchronisation&quot;, &quot;Virtualisation&quot;, &quot;Modélisation&quot;]">🔍 Révéler un indice (7 restants)</button>
+            <button type="button" class="reveal-btn" data-pool="[&quot;Indigo&quot;, &quot;Ocre&quot;, &quot;Incarnate&quot;, &quot;Safran&quot;, &quot;Kaki&quot;, &quot;Opaline&quot;]">🔍 Révéler un indice (6 restants)</button>
           </div>
-          <div class="present-row"><span class="present-label">déjà présents (12/19)</span><div class="chips"><span class="chip chip--present">Application</span><span class="chip chip--present">Informatique</span><span class="chip chip--present">Connexion</span><span class="chip chip--present">Interface</span><span class="chip chip--present">Plateforme</span><span class="chip chip--present">Intelligence</span><span class="chip chip--present">Base</span><span class="chip chip--present">Donnée</span><span class="chip chip--present">Messagerie</span><span class="chip chip--present">Notification</span><span class="chip chip--present">Instanciation</span><span class="chip chip--present">Journalisation</span></div></div>
-          <p class="note">un clin d&#x27;œil facile pour qui code : ce champ parlera à Lucas plus qu&#x27;au grand public</p>
-        </article>
-        <article class="card" id="anatomie--corps-humain">
-          <div class="card-head">
-            <h3>Anatomie, corps humain</h3>
-            <span class="tag">noms</span>
-          </div>
-          <div class="gauge" style="--pct:67%">
-            <div class="gauge-fill"></div>
-            <span class="gauge-label">67 %</span>
-          </div>
-          <div class="missing-row">
-            <span class="missing-label">à chercher (5 pistes)</span>
-            <div class="chips reveal-chips"></div>
-            <button type="button" class="reveal-btn" data-pool="[&quot;Rotule&quot;, &quot;Rétine&quot;, &quot;Aisselle&quot;, &quot;Omoplate&quot;, &quot;Phalange&quot;]">🔍 Révéler un indice (5 restants)</button>
-          </div>
-          <div class="present-row"><span class="present-label">déjà présents (10/15)</span><div class="chips"><span class="chip chip--present">Clavicule</span><span class="chip chip--present">Mâchoire</span><span class="chip chip--present">Nuque</span><span class="chip chip--present">Cheville</span><span class="chip chip--present">Paupière</span><span class="chip chip--present">Narine</span><span class="chip chip--present">Cuisse</span><span class="chip chip--present">Hanche</span><span class="chip chip--present">Gencive</span><span class="chip chip--present">Vertèbre</span></div></div>
-          <p class="note">le noyau (visage, membres) est souvent là ; les organes internes, moins</p>
+          <div class="present-row"><span class="present-label">déjà présents (13/19)</span><div class="chips"><span class="chip chip--present">Rose</span><span class="chip chip--present">Mauve</span><span class="chip chip--present">Pourpre</span><span class="chip chip--present">Vermeille</span><span class="chip chip--present">Écarlate</span><span class="chip chip--present">Turquoise</span><span class="chip chip--present">Ivoire</span><span class="chip chip--present">Corail</span><span class="chip chip--present">Cramoisie</span><span class="chip chip--present">Beige</span><span class="chip chip--present">Argentée</span><span class="chip chip--present">Dorée</span><span class="chip chip--present">Cuivrée</span></div></div>
+          <p class="note">champ pénalisé par la grammaire : une couleur est un nom masculin par défaut (« le rouge »), or le corpus est presque tout féminin</p>
         </article>
       </div>
     </section>
@@ -759,16 +755,16 @@
             <h3>Numérique grand public (IA, réseaux, smartphone)</h3>
             <span class="tag">noms</span>
           </div>
-          <div class="gauge" style="--pct:19%">
+          <div class="gauge" style="--pct:31%">
             <div class="gauge-fill"></div>
-            <span class="gauge-label">19 %</span>
+            <span class="gauge-label">31 %</span>
           </div>
           <div class="missing-row">
-            <span class="missing-label">à chercher (13 pistes)</span>
+            <span class="missing-label">à chercher (11 pistes)</span>
             <div class="chips reveal-chips"></div>
-            <button type="button" class="reveal-btn" data-pool="[&quot;Robotique&quot;, &quot;Cybersécurité&quot;, &quot;Réseau-Social&quot;, &quot;Story&quot;, &quot;Selfie&quot;, &quot;Vidéoconférence&quot;, &quot;Géolocalisation&quot;, &quot;Authentification&quot;, &quot;Biométrie&quot;, &quot;Domotique&quot;, &quot;Réalité-Virtuelle&quot;, &quot;Blockchain&quot;, &quot;Cryptomonnaie&quot;]">🔍 Révéler un indice (13 restants)</button>
+            <button type="button" class="reveal-btn" data-pool="[&quot;Réseau-Social&quot;, &quot;Story&quot;, &quot;Selfie&quot;, &quot;Vidéoconférence&quot;, &quot;Géolocalisation&quot;, &quot;Authentification&quot;, &quot;Biométrie&quot;, &quot;Domotique&quot;, &quot;Réalité-Virtuelle&quot;, &quot;Blockchain&quot;, &quot;Cryptomonnaie&quot;]">🔍 Révéler un indice (11 restants)</button>
           </div>
-          <div class="present-row"><span class="present-label">déjà présents (3/16)</span><div class="chips"><span class="chip chip--present">Publication</span><span class="chip chip--present">Notification</span><span class="chip chip--present">Messagerie</span></div></div>
+          <div class="present-row"><span class="present-label">déjà présents (5/16)</span><div class="chips"><span class="chip chip--present">Robotique</span><span class="chip chip--present">Cybersécurité</span><span class="chip chip--present">Publication</span><span class="chip chip--present">Notification</span><span class="chip chip--present">Messagerie</span></div></div>
           <p class="note">quasi vierge : bon terrain de chasse si le corpus doit parler du monde d&#x27;aujourd&#x27;hui</p>
         </article>
       </div>
@@ -781,7 +777,7 @@
     pas forcément 90 % du vocabulaire français du domaine — seulement 90 % des mots-témoins
     choisis. Les tiers (bien / partiellement / peu couverts) sont recalculés à chaque
     génération, à partir de l'état courant du corpus.</p>
-    <p>généré automatiquement (commit cbb6c30)</p>
+    <p>généré automatiquement (commit 54ee582)</p>
   </footer>
 </main>
 
