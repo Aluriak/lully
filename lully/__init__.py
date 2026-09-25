@@ -27,6 +27,10 @@ try:
     from . import caldav
 except ImportError as err:
     importlog('caldav', err.name)
+try:
+    from .colored import colored
+except ImportError as err:
+    importlog('colored', err.name)
 
 
 
